@@ -3,8 +3,9 @@
 **Shared-Encoder Asymmetric Dual-Pyramid Network** for RGB-D semantic segmentation.
 
 English | [中文](README_zh-CN.md)
-
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23294255.svg)](https://zenodo.org/doi/10.5281/zenodo.23294255)
+
+## Introduction
 
 <p align="center">
   <img src="docs/figures/architecture_overview.png" width="88%" alt="SEADP-Net architecture overview"><br>
@@ -19,21 +20,70 @@ stem, and decodes with two *asymmetric* local pyramids — an RGB branch (A) and
 a deeper depth branch (B, fed `[filled depth, raw sensor validity,
 depth-gradient magnitude]`). Training supervises both heads with an
 equal-weight cross entropy; inference fuses the two heads' probabilities with
-a fixed 0.5/0.5 mean. There is no learnable gating, no point-cloud module and
-no extra geometric attention. S / M / L share the same encoder and differ
-only by the encoder input scale (0.5 / 0.75 / 1.0), local widths, repeat
-depths and decoder width.
+a fixed 0.5/0.5 mean. S / M / L share the same encoder and differ only by the
+encoder input scale (0.5 / 0.75 / 1.0), local widths, repeat depths and
+decoder width.
 
-## Results
+## Main results
 
-| Dataset | Variant | Params | SS mIoU | MS5+flip mIoU |
-|---|---|---:|---:|---:|
-| NYUv2 (40 cls) | S | 26.25 M | 58.27 | 60.16 |
-| NYUv2 (40 cls) | M | 28.95 M | 60.13 | 61.22 |
-| NYUv2 (40 cls) | L | 29.82 M | 60.94 | 62.27 |
-| SUN RGB-D (37 cls) | S | 26.25 M | 52.76 | 53.69 |
-| SUN RGB-D (37 cls) | M | 28.95 M | 53.83 | 54.66 |
-| SUN RGB-D (37 cls) | L | 29.82 M | 54.76 | 55.28 |
+| Model | Backbone | Params | NYUv2 In | NYUv2 MACs | NYUv2 mIoU | SUN-RGBD In | SUN-RGBD MACs | SUN-RGBD mIoU |
+|---|---|---|---|---:|---:|---|---:|---:|
+| Omnivore | Swin-T | 28.9M | 480×640 | 28.6G | 49.7 | 530×730 | – | – |
+| TokenFusion | MiT-B2 | 26.0M | 480×640 | 54.9G | 53.3 | 530×730 | – | – |
+| DFormer-T | DFormer-T | 6.0M | 480×640 | 14.7G | 51.8 | 530×730 | 18.9G | 48.8 |
+| DFormer-S | DFormer-S | 18.7M | 480×640 | 28.7G | 53.6 | 530×730 | 37.0G | 50.0 |
+| DFormer-B | DFormer-B | 29.5M | 480×640 | 45.3G | 55.6 | 530×730 | 58.4G | 51.2 |
+| DFormerv2-S | DFormerv2-S | 26.7M | 480×640 | 33.9G | 56.0 | 530×730 | 43.7G | 51.5 |
+| DFormer++-Tiny | DFormer++-T | 17.3M | 480×640 | 29.5G | 57.0 | 530×730 | 39.3G | 51.5 |
+| **SEADP-Net-S** | RF-DETR ViT-S | 26.3M | 480×640 | 28.4G | **60.2** | 530×730 | 38.8G | **53.7** |
+| ESANet | ResNet-34 | 47.0M | 480×640 | 45.1G | 50.3 | 480×640 | 34.9G | 45.0 |
+| EMSANet | ResNet-34 | 46.9M | 480×640 | 45.1G | 51.0 | 530×730 | 58.7G | 48.4 |
+| TokenFusion | MiT-B3 | 45.9M | 480×640 | 94.0G | 54.2 | 530×730 | – | – |
+| Omnivore | Swin-S | 50.6M | 480×640 | 56.0G | 52.7 | 530×730 | – | – |
+| DFormer-L | DFormer-L | 39.0M | 480×640 | 69.3G | 57.2 | 530×730 | 89.2G | 52.5 |
+| AsymFormer | B0+Conv-T | 33.0M | 480×640 | 39.4G | 55.3 | 530×730 | 52.6G | 49.1 |
+| Sigma | VMamba-T | 48.3M | 480×640 | 89.5G | 53.9 | 480×640 | 89.5G | 50.0 |
+| DFormerv2-B | DFormerv2-B | 53.9M | 480×640 | 67.2G | 57.7 | 530×730 | 86.9G | 52.8 |
+| DFormer++-Small | DFormer++-S | 37.2M | 480×640 | 56.4G | 58.1 | 530×730 | 74.6G | 52.7 |
+| **SEADP-Net-M** | RF-DETR ViT-S | 29.0M | 480×640 | 56.8G | **61.2** | 530×730 | 76.7G | **54.7** |
+| ACNet | ResNet-50 | 115.6M | 480×640 | 115.6G | 48.3 | 530×730 | 150.6G | 48.1 |
+| SGNet | ResNet-101 | 64.7M | 480×640 | 108.5G | 51.1 | 530×730 | 151.5G | 48.6 |
+| SA-Gate | ResNet-101 | 110.9M | 480×640 | 192.6G | 52.4 | 530×730 | 248.7G | 49.4 |
+| CEN | ResNet-101 | 118.2M | 480×640 | 617.9G | 51.7 | 530×730 | 789.2G | 50.2 |
+| CEN | ResNet-152 | 133.9M | 480×640 | 663.3G | 52.5 | 530×730 | 848.3G | 51.1 |
+| ShapeConv | ResNext-101 | 106.8M | 480×640 | 168.4G | 51.3 | 530×730 | 217.8G | 48.6 |
+| FRNet | ResNet-34 | 87.8M | 480×640 | 109.5G | 53.6 | 530×730 | 142.7G | 51.8 |
+| PGDENet | ResNet-34 | 107.4M | 480×640 | 162.9G | 53.7 | 530×730 | 212.2G | 51.0 |
+| MultiMAE | ViT-B | 95.4M | 640×640 | 403.8G | 56.0 | 640×640 | – | – |
+| Omnivore | Swin-B | 90.1M | 480×640 | 99.5G | 54.0 | 530×730 | – | – |
+| CMX | MiT-B2 | 66.6M | 480×640 | 66.9G | 54.4 | 530×730 | 85.9G | 49.7 |
+| CMX | MiT-B4 | 139.9M | 480×640 | 134.0G | 56.3 | 530×730 | 173.2G | 52.1 |
+| CMX | MiT-B5 | 181.1M | 480×640 | 167.5G | 56.9 | 530×730 | 216.9G | 52.4 |
+| CMNeXt | MiT-B4 | 116.6M | 480×640 | 131.4G | 56.9 | 530×730 | – | – |
+| GeminiFusion | MiT-B3 | 75.8M | 480×640 | 138.2G | 56.8 | 530×730 | 179.0G | 52.7 |
+| Sigma | VMamba-S | 69.8M | 480×640 | 138.9G | 57.0 | 480×640 | 138.9G | 52.4 |
+| DFormerv2-L | DFormerv2-L | 95.5M | 480×640 | 124.1G | 58.4 | 530×730 | 160.5G | 53.3 |
+| DFormer++-Base | DFormer++-B | 66.7M | 480×640 | 97.5G | 59.0 | 530×730 | 129.0G | 53.0 |
+| **SEADP-Net-L** | RF-DETR ViT-S | 29.8M | 480×640 | 100.1G | **62.3** | 530×730 | 140.1G | **55.3** |
+
+<sub>mIoU in %, MACs in G for a single forward pass; "–" indicates omitted or unavailable results, following the paper. Reference accuracies are the reported values from [DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) and [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf); external methods are not retrained here, and counting scopes are not guaranteed identical across papers. SEADP-Net rows use the released avg weights with five scales + horizontal flipping; our MACs count Conv/Linear/attention only (1 FMA = 1 MAC).</sub>
+
+### Architecture ablations
+
+| Configuration | Params (M) | SS (%) | MSF (%) | ΔSS (pp) | ΔMSF (pp) |
+|---|---:|---:|---:|---:|---:|
+| Full SEADP-Net-L | 29.82 | 60.94 | 62.27 | – | – |
+| RF dense RGB-D head | 23.75 | 59.50 | 60.87 | -1.44 | -1.40 |
+| RGB input to the deeper local path | 29.82 | 60.27 | 61.43 | -0.68 | -0.83 |
+| B-only training | 27.19 | 59.70 | 60.90 | -1.24 | -1.37 |
+| All-RGB inputs | 29.82 | 60.20 | 61.55 | -0.74 | -0.72 |
+| Reversed local depths | 29.82 | 60.36 | 61.48 | -0.58 | -0.79 |
+| Symmetric local depths | 29.76 | 60.08 | 61.36 | -0.87 | -0.91 |
+| Local depth only | 29.82 | 59.86 | 61.04 | -1.08 | -1.23 |
+
+<sub>Architecture ablations on NYUv2; Δ denotes the difference from SEADP-Net-L. Values are single-seed observations from the frozen ablation records.</sub>
+
+### Accuracy vs computation
 
 <p align="center">
   <img src="docs/figures/performance_macs.png" width="65%" alt="NYUv2 mIoU vs single-forward MACs"><br>
@@ -42,156 +92,66 @@ depths and decoder width.
   each family's S/M/L sizes.</em>
 </p>
 
-### Comparison with the state of the art — NYUv2 (40 classes, 654 test images)
-
-|  | Method | Backbone | #Params (M) | Input H×W | Compute (G) | mIoU (%) ↑ |
-| --- | --- | --- | ---: | --- | ---: | ---: |
-| Ⅰ | Omnivore | Swin-T | 28.90 | 480×640 | 28.60 | 49.70 |
-| Ⅰ | TokenFusion | MiT-B2 | 26.00 | 480×640 | 54.90 | 53.30 |
-| Ⅰ | DFormer-T | DFormer-T | 6.00 | 480×640 | 14.70 | 51.80 |
-| Ⅰ | DFormer-S | DFormer-S | 18.70 | 480×640 | 28.70 | 53.60 |
-| Ⅰ | DFormer-B | DFormer-B | 29.50 | 480×640 | 45.30 | 55.60 |
-| Ⅰ | DFormerv2-S | DFormerv2-S | 26.70 | 480×640 | 33.90 | 56.00 |
-| Ⅰ | DFormer++-Tiny | DFormer++-T | 17.30 | 480×640 | 29.50 | 57.00 |
-| Ⅰ | **SEADP-Net-S (Ours)** | RF-DETR ViT-S | 26.25 | 480×640 | 28.37 | **60.16** |
-| Ⅱ | ESANet | ResNet-34 | 47.00 | 480×640 | 45.10 | 50.30 |
-| Ⅱ | EMSANet | ResNet-34 | 46.90 | 480×640 | 45.10 | 51.00 |
-| Ⅱ | TokenFusion | MiT-B3 | 45.90 | 480×640 | 94.00 | 54.20 |
-| Ⅱ | Omnivore | Swin-S | 50.60 | 480×640 | 56.00 | 52.70 |
-| Ⅱ | DFormer-L | DFormer-L | 39.00 | 480×640 | 69.30 | 57.20 |
-| Ⅱ | AsymFormer | B0+Conv-T | 33.00 | 480×640 | 39.40 | 55.30 |
-| Ⅱ | Sigma | VMamba-T | 48.30 | 480×640 | 89.50 | 53.90 |
-| Ⅱ | DFormerv2-B | DFormerv2-B | 53.90 | 480×640 | 67.20 | 57.70 |
-| Ⅱ | DFormer++-Small | DFormer++-S | 37.20 | 480×640 | 56.40 | 58.10 |
-| Ⅱ | **SEADP-Net-M (Ours)** | RF-DETR ViT-S | 28.95 | 480×640 | 56.78 | **61.22** |
-| Ⅲ | ACNet | ResNet-50 | 115.60 | 480×640 | 115.60 | 48.30 |
-| Ⅲ | SGNet | ResNet-101 | 64.70 | 480×640 | 108.50 | 51.10 |
-| Ⅲ | SA-Gate | ResNet-101 | 110.90 | 480×640 | 192.60 | 52.40 |
-| Ⅲ | CEN | ResNet-101 | 118.20 | 480×640 | 617.90 | 51.70 |
-| Ⅲ | CEN | ResNet-152 | 133.90 | 480×640 | 663.30 | 52.50 |
-| Ⅲ | ShapeConv | ResNext-101 | 106.80 | 480×640 | 168.40 | 51.30 |
-| Ⅲ | FRNet | ResNet-34 | 87.80 | 480×640 | 109.50 | 53.60 |
-| Ⅲ | PGDENet | ResNet-34 | 107.40 | 480×640 | 162.90 | 53.70 |
-| Ⅲ | MultiMAE | ViT-B | 95.40 | 640×640 | 403.80 | 56.00 |
-| Ⅲ | Omnivore | Swin-B | 90.10 | 480×640 | 99.50 | 54.00 |
-| Ⅲ | CMX | MiT-B2 | 66.60 | 480×640 | 66.90 | 54.40 |
-| Ⅲ | CMX | MiT-B4 | 139.90 | 480×640 | 134.00 | 56.30 |
-| Ⅲ | CMX | MiT-B5 | 181.10 | 480×640 | 167.50 | 56.90 |
-| Ⅲ | CMNeXt | MiT-B4 | 116.60 | 480×640 | 131.40 | 56.90 |
-| Ⅲ | GeminiFusion | MiT-B3 | 75.80 | 480×640 | 138.20 | 56.80 |
-| Ⅲ | Sigma | VMamba-S | 69.80 | 480×640 | 138.90 | 57.00 |
-| Ⅲ | DFormerv2-L | DFormerv2-L | 95.50 | 480×640 | 124.10 | 58.40 |
-| Ⅲ | DFormer++-Base | DFormer++-B | 66.70 | 480×640 | 97.50 | 59.00 |
-| Ⅲ | **SEADP-Net-L (Ours)** | RF-DETR ViT-S | 29.82 | 480×640 | 100.06 | **62.27** |
-
-### Comparison with the state of the art — SUN RGB-D (37 classes, 5050 test images)
-
-|  | Method | Backbone | #Params (M) | Input H×W | Compute (G) | mIoU (%) ↑ |
-| --- | --- | --- | ---: | --- | ---: | ---: |
-| Ⅰ | Omnivore | Swin-T | 28.90 | 530×730 | — | — |
-| Ⅰ | TokenFusion | MiT-B2 | 26.00 | 530×730 | 70.70 | — |
-| Ⅰ | DFormer-T | DFormer-T | 6.00 | 530×730 | 18.90 | 48.80 |
-| Ⅰ | DFormer-S | DFormer-S | 18.70 | 530×730 | 37.00 | 50.00 |
-| Ⅰ | DFormer-B | DFormer-B | 29.50 | 530×730 | 58.40 | 51.20 |
-| Ⅰ | DFormerv2-S | DFormerv2-S | 26.70 | 530×730 | 43.70 | 51.50 |
-| Ⅰ | DFormer++-Tiny | DFormer++-T | 17.30 | 530×730 | 39.30 | 51.50 |
-| Ⅰ | **SEADP-Net-S (Ours)** | RF-DETR ViT-S | 26.25 | 530×730 | 38.82 | **53.69** |
-| Ⅱ | ESANet | ResNet-34 | 47.00 | 480×640 | 34.90 | 45.00 |
-| Ⅱ | EMSANet | ResNet-34 | 46.90 | 530×730 | 58.70 | 48.40 |
-| Ⅱ | TokenFusion | MiT-B3 | 45.90 | 530×730 | 121.60 | — |
-| Ⅱ | Omnivore | Swin-S | 50.60 | 530×730 | — | — |
-| Ⅱ | DFormer-L | DFormer-L | 39.00 | 530×730 | 89.20 | 52.50 |
-| Ⅱ | AsymFormer | B0+Conv-T | 33.00 | 530×730 | 52.60 | 49.10 |
-| Ⅱ | Sigma | VMamba-T | 48.30 | 480×640 | 89.50 | 50.00 |
-| Ⅱ | DFormerv2-B | DFormerv2-B | 53.90 | 530×730 | 86.90 | 52.80 |
-| Ⅱ | DFormer++-Small | DFormer++-S | 37.20 | 530×730 | 74.60 | 52.70 |
-| Ⅱ | **SEADP-Net-M (Ours)** | RF-DETR ViT-S | 28.95 | 530×730 | 76.72 | **54.66** |
-| Ⅲ | ACNet | ResNet-50 | 115.60 | 530×730 | 150.60 | 48.10 |
-| Ⅲ | SGNet | ResNet-101 | 64.70 | 530×730 | 151.50 | 48.60 |
-| Ⅲ | SA-Gate | ResNet-101 | 110.90 | 530×730 | 248.70 | 49.40 |
-| Ⅲ | CEN | ResNet-101 | 118.20 | 530×730 | 789.20 | 50.20 |
-| Ⅲ | CEN | ResNet-152 | 133.90 | 530×730 | 848.30 | 51.10 |
-| Ⅲ | ShapeConv | ResNext-101 | 106.80 | 530×730 | 217.80 | 48.60 |
-| Ⅲ | FRNet | ResNet-34 | 87.80 | 530×730 | 142.70 | 51.80 |
-| Ⅲ | PGDENet | ResNet-34 | 107.40 | 530×730 | 212.20 | 51.00 |
-| Ⅲ | MultiMAE | ViT-B | 95.40 | 640×640 | 403.80 | — |
-| Ⅲ | Omnivore | Swin-B | 90.10 | 530×730 | — | — |
-| Ⅲ | CMX | MiT-B2 | 66.60 | 530×730 | 85.90 | 49.70 |
-| Ⅲ | CMX | MiT-B4 | 139.90 | 530×730 | 173.20 | 52.10 |
-| Ⅲ | CMX | MiT-B5 | 181.10 | 530×730 | 216.90 | 52.40 |
-| Ⅲ | CMNeXt | MiT-B4 | 116.60 | 530×730 | 169.60 | — |
-| Ⅲ | GeminiFusion | MiT-B3 | 75.80 | 530×730 | 179.00 | 52.70 |
-| Ⅲ | Sigma | VMamba-S | 69.80 | 480×640 | 138.90 | 52.40 |
-| Ⅲ | DFormerv2-L | DFormerv2-L | 95.50 | 530×730 | 160.50 | 53.30 |
-| Ⅲ | DFormer++-Base | DFormer++-B | 66.70 | 530×730 | 129.00 | 53.00 |
-| Ⅲ | **SEADP-Net-L (Ours)** | RF-DETR ViT-S | 29.82 | 530×730 | 140.10 | **55.28** |
-
-<sub>
-Comparison values (parameters, input size, computation, mIoU) are used as reported by the original papers — [DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) and [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf); external methods were **not** retrained in our environment, and counting scopes are not guaranteed identical across papers. “—” marks values not reported, or SUN-RGBD accuracies re-measured by the DFormer++ authors (TokenFusion MiT-B2/B3, MultiMAE, CMNeXt MiT-B4) that we omit. SEADP-Net computation is the single-forward major-operator MAC count of the full network (Conv/Linear/attention, 1 FMA = 1 MAC, padding and attention matmuls included, element-wise ops excluded); accuracies are MS5+flip. Bold marks our models — a system-level comparison without per-module attribution or cross-seed significance claims.
-</sub>
-
-Full provenance — weight SHA256, averaging windows, snapshot updates,
-per-head scores and evaluation records — is in [`model_zoo.json`](model_zoo.json)
-and [`eval_records/`](eval_records) (SS/MSF rerun outputs of this code base;
-every number matches the frozen records, max |delta| 0.0005 except one
-cross-GPU +0.005 case documented in
-[`docs/equivalence_verification.md`](docs/equivalence_verification.md)).
-
-## Installation
-
-Python ≥ 3.11, PyTorch ≥ 2.4 (verified on 2.8.0+cu128), plus the RF-DETR
-package pinned to upstream commit `e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe`
-(version string 1.11.0.dev0).
-
-```bash
-pip install -r requirements.txt   # frozen reference environment
-git clone https://github.com/roboflow/rf-detr && cd rf-detr
-git checkout e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe && pip install -e .
-cd .. && pip install -e .         # seadpnet
-```
-
-You also need the fixed pretrained backbone file `rf-detr-seg-small.pt`
-(SHA256 `6de3da31b2572cac214a1c76cce4a92a13966d56390ac2b3a3de9a8dc2b2bca3`)
-from the RF-DETR release; every command below takes its location via
-`--rf-checkpoint`.
-
 ## Model zoo
 
-| File | Dataset / variant |
-|---|---|
-| `weights/seadp-net-nyuv2-s.pth` | NYUv2 S |
-| `weights/seadp-net-nyuv2-m.pth` | NYUv2 M |
-| `weights/seadp-net-nyuv2-l.pth` | NYUv2 L |
-| `weights/seadp-net-sunrgbd-s.pth` | SUN RGB-D S |
-| `weights/seadp-net-sunrgbd-m.pth` | SUN RGB-D M |
-| `weights/seadp-net-sunrgbd-l.pth` | SUN RGB-D L |
+| Variant | NYUv2 SS / MSF | SUN RGB-D SS / MSF | Weights |
+|---|---|---|---|
+| S | 58.27 / 60.16 | 52.76 / 53.69 | `weights/seadp-net-nyuv2-s.pth`, `weights/seadp-net-sunrgbd-s.pth` |
+| M | 60.13 / 61.22 | 53.83 / 54.66 | `weights/seadp-net-nyuv2-m.pth`, `weights/seadp-net-sunrgbd-m.pth` |
+| L | 60.94 / 62.27 | 54.76 / 55.28 | `weights/seadp-net-nyuv2-l.pth`, `weights/seadp-net-sunrgbd-l.pth` |
 
-Each file is an FP32 uniform parameter average of three listed mid-training
-snapshots (a single-model inference artifact, not an output ensemble) with
-sanitized metadata; the tensor bytes are bit-identical to the corresponding
-training average (dual SHA256 recorded in `model_zoo.json`). All six weights are attached to the
+All six weights are attached to the
 [v1.0.0 release](https://github.com/forever678-arch/SEADP-Net/releases/tag/v1.0.0);
-verify each file against the SHA256 in `model_zoo.json`.
+each is an FP32 uniform parameter average of three listed mid-training
+snapshots with sanitized metadata and dual SHA256 provenance in
+[`model_zoo.json`](model_zoo.json).
 
-## Data preparation
+## Getting started
 
-Dataset bodies are not redistributed; the preparation tools download the
-official sources (SHA256-pinned) and reproduce the exact processed layout.
+### Requirements
+
+Python ≥ 3.11, PyTorch ≥ 2.4 (verified on 2.8.0+cu128), plus the RF-DETR
+package pinned to upstream commit `e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe`.
+
+```bash
+pip install -r requirements.txt
+git clone https://github.com/roboflow/rf-detr && cd rf-detr
+git checkout e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe && pip install -e .
+cd .. && pip install -e .
+```
+
+Also fetch the fixed pretrained backbone `rf-detr-seg-small.pt`
+(SHA256 `6de3da31b2572cac214a1c76cce4a92a13966d56390ac2b3a3de9a8dc2b2bca3`)
+from the RF-DETR release; commands take its location via `--rf-checkpoint`.
+
+### Data preparation
 
 ```bash
 # NYUv2 — put the five pinned source files under data/nyuv2/raw/ first
-python tools/prepare_nyuv2.py data/nyuv2
-python tools/extract_nyuv2_depth.py data/nyuv2
-python tools/prepare_nyuv2_validity.py data/nyuv2 data/nyuv2/nyuv2_raw_validity
+python tools/prepare_nyuv2.py --root data/nyuv2
+python tools/extract_nyuv2_depth.py --root data/nyuv2
+python tools/prepare_nyuv2_validity.py --data-root data/nyuv2 --out data/nyuv2/nyuv2_raw_validity
 
 # SUN RGB-D — self-contained resumable download of the official archive
 python tools/prepare_sunrgbd.py data/sunrgbd_processed
 ```
 
-Details, source checksums and the directory contract:
-[`docs/data_preparation.md`](docs/data_preparation.md).
+Details and source checksums: [`docs/data_preparation.md`](docs/data_preparation.md).
 
-## Evaluation
+### Training
+
+```bash
+python tools/train_nyuv2.py --config configs/nyuv2/seadp-net-l.yaml --run-dir runs/nyu_l
+python tools/train_sunrgbd.py --config configs/sunrgbd/seadp-net-m.yaml --run-dir runs/sun_m
+```
+
+The entries preserve the training protocol exactly (batch-32 update with the
+full-batch valid-pixel CE denominator, BF16 forward + FP32 CE, cosine LR with
+500 warmup updates, the `backbone.*encoder*` LR grouping). **Model selection
+monitored fixed subsets of the official test splits** (`test_sub100`,
+`test_sub500`) — they are not independent validation sets.
+
+### Evaluation
 
 ```bash
 # single scale
@@ -207,33 +167,11 @@ python tools/evaluate_sunrgbd.py --checkpoint weights/seadp-net-sunrgbd-m.pth \
     --scales 0.5 0.75 1.0 1.25 1.5 --flip --out sun_m_msf.json
 ```
 
-`load_experiment` rebuilds the model from the checkpoint's own config,
-compares architecture metadata exactly and loads weights with `strict=True`;
-`--rf-checkpoint` only overrides where the fixed pretrained file lives. The
-per-view order (FP32 logits → unflip → resize → crop → softmax → view mean →
-0.5/0.5 head fusion → argmax, confusion matrix over the whole split) is
-specified in [`docs/evaluation_protocol.md`](docs/evaluation_protocol.md) —
-do not reorder it.
+The per-view order (FP32 logits → unflip → resize → crop → softmax → view
+mean → 0.5/0.5 head fusion → argmax) is specified in
+[`docs/evaluation_protocol.md`](docs/evaluation_protocol.md) — do not reorder.
 
-## Training
-
-```bash
-python tools/train_nyuv2.py --config configs/nyuv2/seadp-net-l.yaml --run-dir runs/nyu_l
-python tools/train_sunrgbd.py --config configs/sunrgbd/seadp-net-m.yaml --run-dir runs/sun_m
-```
-
-The entries preserve the original training math exactly: one effective
-batch-32 update per AdamW step (microbatch CE **sums** divided by the full
-batch's valid-pixel count), BF16 forward with FP32 CE, cosine LR with 500
-warmup updates, gradient clip 0.1, and the LR grouping rule where only
-`backbone.*encoder*` (without `depth`) parameters take the backbone LR.
-Snapshot averaging uses `tools/average_checkpoints.py`.
-
-**Honest reporting note:** training-time selection monitored fixed subsets of
-the official *test* splits (NYUv2 `test_sub100`, SUN `test_sub500`); they are
-not independent validation sets.
-
-## Inference
+### Inference
 
 ```bash
 python tools/infer.py --checkpoint weights/seadp-net-sunrgbd-l.pth \
@@ -242,53 +180,48 @@ python tools/infer.py --checkpoint weights/seadp-net-sunrgbd-l.pth \
     --out-seg seg.png --out-color seg_color.png
 ```
 
-`depth.png` is uint16 millimetres (or float32 metres `.npy`); `valid.png` is
-nonzero at raw sensor returns.
-
 ## Repository layout
 
 ```text
 SEADP-Net/
-  seadpnet/                  the package
-    blocks.py                geometry, ChannelNorm, decoder building blocks
-    csp.py                   CSP-style local pyramids (self-implemented)
-    dual_head_model.py       shared encoder + HR stem + dual-decoder graph
-    scaled_encoder_model.py  S/M builder (encoder input scaling, 12 blocks kept)
-    encoder_retention.py     full-encoder retention audit metadata
-    model.py                 loaders for all three checkpoint formats
-    losses.py                dual CE with the full-batch valid-pixel denominator
-    rf/                      RF-DETR adapters + vendored semantic wrapper
-    data/                    NYUv2 / SUN RGB-D loaders, class metadata
-    evaluation/              SS / MSF protocols, metrics, native-GT SUN eval
-  configs/                   nyuv2/{s,m,l}.yaml, sunrgbd/{s,m,l}.yaml
+  seadpnet/                  the package (models / data / losses / evaluation)
+  configs/                   nyuv2/sunrgbd S/M/L training configs
   tools/                     train / evaluate / infer / average / export,
                              prepare_{nyuv2,sunrgbd} data pipelines
   tests/                     original-vs-package equivalence test
   docs/                      architecture figure, protocols, data prep, verification
   eval_records/              verification SS/MSF outputs for all six weights
   model_zoo.json             weights, dual SHA256, provenance, scores
-  weights/                   local release weights (gitignored; see model zoo)
 ```
 
 ## Verification
 
-The package was verified against the original training code on the training
-host: all six formal weights load bit-exact (identical parameters, zero
-per-head logit differences, equal confusion matrices), the training entry
-reproduces the original first augmented batch byte-for-byte, and the full
-SS/MSF reruns match every recorded number. Details:
+All six formal weights load bit-exact against the original training code
+(identical parameters, zero per-head logit differences, equal confusion
+matrices); the training entry reproduces the original first augmented batch
+byte-for-byte; SS/MSF reruns match every recorded number. Details:
 [`docs/equivalence_verification.md`](docs/equivalence_verification.md).
-
-Checkpoint format strings such as `c11-csp-local-v1` inside the code and
-weight metadata are internal load keys inherited from the training lineage,
+Checkpoint format strings such as `c11-csp-local-v1` are internal load keys,
 not model names.
 
-## License & citation
+## License
 
 Code is released under the [MIT License](LICENSE). Pretrained backbone and
 third-party components remain under their own licenses (Apache-2.0; see
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)). A archived DOI will be
-provided via Zenodo for each release.
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)). Each release is archived
+on Zenodo: [10.5281/zenodo.23294255](https://zenodo.org/doi/10.5281/zenodo.23294255).
+
+## Citation
+
+```bibtex
+@software{seadpnet2026,
+  title  = {SEADP-Net: A Shared-Encoder Asymmetric Dual-Pyramid Network for RGB-D Semantic Segmentation},
+  author = {The SEADP-Net Authors},
+  year   = {2026},
+  doi    = {10.5281/zenodo.23294255},
+  url    = {https://github.com/forever678-arch/SEADP-Net}
+}
+```
 
 ## Acknowledgements
 

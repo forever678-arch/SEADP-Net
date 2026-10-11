@@ -3,8 +3,9 @@
 **共享编码器非对称双金字塔网络**（Shared-Encoder Asymmetric Dual-Pyramid Network），面向 RGB-D 语义分割。
 
 [English](README.md) | 中文
-
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23294255.svg)](https://zenodo.org/doi/10.5281/zenodo.23294255)
+
+## 简介
 
 <p align="center">
   <img src="docs/figures/architecture_overview.png" width="88%" alt="SEADP-Net 架构总览"><br>
@@ -13,18 +14,73 @@
   固定 0.5/0.5 均值融合。</em>
 </p>
 
-SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、宽度 384、patch 12）作为共享 RGB-D 上下文编码器，加入 stride-4 高分辨率主干，并用两个**非对称**局部金字塔解码——RGB 分支（A）与更深的深度分支（B，输入为 `[填补深度, 原始传感器有效掩码, 深度梯度幅值]`）。训练以等权交叉熵分别监督两个头；推理以固定 0.5/0.5 概率均值融合两头。没有可学习门控、没有点云模块、也没有额外的几何注意力。S / M / L 共用同一编码器，仅通过编码器输入尺度（0.5 / 0.75 / 1.0）、局部宽度、重复深度与解码器宽度区分。
+SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、宽度 384、
+patch 12）作为共享 RGB-D 上下文编码器，加入 stride-4 高分辨率主干，并用两个
+**非对称**局部金字塔解码——RGB 分支（A）与更深的深度分支（B，输入为
+`[填补深度, 原始传感器有效掩码, 深度梯度幅值]`）。训练以等权交叉熵分别监督两个
+头；推理以固定 0.5/0.5 概率均值融合两头。S / M / L 共用同一编码器，仅通过编码
+器输入尺度（0.5 / 0.75 / 1.0）、局部宽度、重复深度与解码器宽度区分。
 
-## 结果
+## 主要结果
 
-| 数据集 | 版本 | 参数量 | SS mIoU | MS5+flip mIoU |
-|---|---|---:|---:|---:|
-| NYUv2（40 类）| S | 26.25 M | 58.27 | 60.16 |
-| NYUv2（40 类）| M | 28.95 M | 60.13 | 61.22 |
-| NYUv2（40 类）| L | 29.82 M | 60.94 | 62.27 |
-| SUN RGB-D（37 类）| S | 26.25 M | 52.76 | 53.69 |
-| SUN RGB-D（37 类）| M | 28.95 M | 53.83 | 54.66 |
-| SUN RGB-D（37 类）| L | 29.82 M | 54.76 | 55.28 |
+| Model | Backbone | Params | NYUv2 In | NYUv2 MACs | NYUv2 mIoU | SUN-RGBD In | SUN-RGBD MACs | SUN-RGBD mIoU |
+|---|---|---|---|---:|---:|---|---:|---:|
+| Omnivore | Swin-T | 28.9M | 480×640 | 28.6G | 49.7 | 530×730 | – | – |
+| TokenFusion | MiT-B2 | 26.0M | 480×640 | 54.9G | 53.3 | 530×730 | – | – |
+| DFormer-T | DFormer-T | 6.0M | 480×640 | 14.7G | 51.8 | 530×730 | 18.9G | 48.8 |
+| DFormer-S | DFormer-S | 18.7M | 480×640 | 28.7G | 53.6 | 530×730 | 37.0G | 50.0 |
+| DFormer-B | DFormer-B | 29.5M | 480×640 | 45.3G | 55.6 | 530×730 | 58.4G | 51.2 |
+| DFormerv2-S | DFormerv2-S | 26.7M | 480×640 | 33.9G | 56.0 | 530×730 | 43.7G | 51.5 |
+| DFormer++-Tiny | DFormer++-T | 17.3M | 480×640 | 29.5G | 57.0 | 530×730 | 39.3G | 51.5 |
+| **SEADP-Net-S** | RF-DETR ViT-S | 26.3M | 480×640 | 28.4G | **60.2** | 530×730 | 38.8G | **53.7** |
+| ESANet | ResNet-34 | 47.0M | 480×640 | 45.1G | 50.3 | 480×640 | 34.9G | 45.0 |
+| EMSANet | ResNet-34 | 46.9M | 480×640 | 45.1G | 51.0 | 530×730 | 58.7G | 48.4 |
+| TokenFusion | MiT-B3 | 45.9M | 480×640 | 94.0G | 54.2 | 530×730 | – | – |
+| Omnivore | Swin-S | 50.6M | 480×640 | 56.0G | 52.7 | 530×730 | – | – |
+| DFormer-L | DFormer-L | 39.0M | 480×640 | 69.3G | 57.2 | 530×730 | 89.2G | 52.5 |
+| AsymFormer | B0+Conv-T | 33.0M | 480×640 | 39.4G | 55.3 | 530×730 | 52.6G | 49.1 |
+| Sigma | VMamba-T | 48.3M | 480×640 | 89.5G | 53.9 | 480×640 | 89.5G | 50.0 |
+| DFormerv2-B | DFormerv2-B | 53.9M | 480×640 | 67.2G | 57.7 | 530×730 | 86.9G | 52.8 |
+| DFormer++-Small | DFormer++-S | 37.2M | 480×640 | 56.4G | 58.1 | 530×730 | 74.6G | 52.7 |
+| **SEADP-Net-M** | RF-DETR ViT-S | 29.0M | 480×640 | 56.8G | **61.2** | 530×730 | 76.7G | **54.7** |
+| ACNet | ResNet-50 | 115.6M | 480×640 | 115.6G | 48.3 | 530×730 | 150.6G | 48.1 |
+| SGNet | ResNet-101 | 64.7M | 480×640 | 108.5G | 51.1 | 530×730 | 151.5G | 48.6 |
+| SA-Gate | ResNet-101 | 110.9M | 480×640 | 192.6G | 52.4 | 530×730 | 248.7G | 49.4 |
+| CEN | ResNet-101 | 118.2M | 480×640 | 617.9G | 51.7 | 530×730 | 789.2G | 50.2 |
+| CEN | ResNet-152 | 133.9M | 480×640 | 663.3G | 52.5 | 530×730 | 848.3G | 51.1 |
+| ShapeConv | ResNext-101 | 106.8M | 480×640 | 168.4G | 51.3 | 530×730 | 217.8G | 48.6 |
+| FRNet | ResNet-34 | 87.8M | 480×640 | 109.5G | 53.6 | 530×730 | 142.7G | 51.8 |
+| PGDENet | ResNet-34 | 107.4M | 480×640 | 162.9G | 53.7 | 530×730 | 212.2G | 51.0 |
+| MultiMAE | ViT-B | 95.4M | 640×640 | 403.8G | 56.0 | 640×640 | – | – |
+| Omnivore | Swin-B | 90.1M | 480×640 | 99.5G | 54.0 | 530×730 | – | – |
+| CMX | MiT-B2 | 66.6M | 480×640 | 66.9G | 54.4 | 530×730 | 85.9G | 49.7 |
+| CMX | MiT-B4 | 139.9M | 480×640 | 134.0G | 56.3 | 530×730 | 173.2G | 52.1 |
+| CMX | MiT-B5 | 181.1M | 480×640 | 167.5G | 56.9 | 530×730 | 216.9G | 52.4 |
+| CMNeXt | MiT-B4 | 116.6M | 480×640 | 131.4G | 56.9 | 530×730 | – | – |
+| GeminiFusion | MiT-B3 | 75.8M | 480×640 | 138.2G | 56.8 | 530×730 | 179.0G | 52.7 |
+| Sigma | VMamba-S | 69.8M | 480×640 | 138.9G | 57.0 | 480×640 | 138.9G | 52.4 |
+| DFormerv2-L | DFormerv2-L | 95.5M | 480×640 | 124.1G | 58.4 | 530×730 | 160.5G | 53.3 |
+| DFormer++-Base | DFormer++-B | 66.7M | 480×640 | 97.5G | 59.0 | 530×730 | 129.0G | 53.0 |
+| **SEADP-Net-L** | RF-DETR ViT-S | 29.8M | 480×640 | 100.1G | **62.3** | 530×730 | 140.1G | **55.3** |
+
+<sub>mIoU 为 %，MACs 为单次前向 G 值；"–"表示省略或不可得的结果，与论文一致。对照精度取 [DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) 与 [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf) 的论文报告值；外部方法未在本仓库环境重训，跨论文计数范围不保证一致。SEADP-Net 各行使用发布参数平均权重、五尺度+水平翻转；我们的 MACs 仅计 Conv/Linear/attention（1 FMA = 1 MAC）。</sub>
+
+### 架构消融
+
+| Configuration | Params (M) | SS (%) | MSF (%) | ΔSS (pp) | ΔMSF (pp) |
+|---|---:|---:|---:|---:|---:|
+| Full SEADP-Net-L | 29.82 | 60.94 | 62.27 | – | – |
+| RF dense RGB-D head | 23.75 | 59.50 | 60.87 | -1.44 | -1.40 |
+| RGB input to the deeper local path | 29.82 | 60.27 | 61.43 | -0.68 | -0.83 |
+| B-only training | 27.19 | 59.70 | 60.90 | -1.24 | -1.37 |
+| All-RGB inputs | 29.82 | 60.20 | 61.55 | -0.74 | -0.72 |
+| Reversed local depths | 29.82 | 60.36 | 61.48 | -0.58 | -0.79 |
+| Symmetric local depths | 29.76 | 60.08 | 61.36 | -0.87 | -0.91 |
+| Local depth only | 29.82 | 59.86 | 61.04 | -1.08 | -1.23 |
+
+<sub>NYUv2 架构消融；Δ 为相对 SEADP-Net-L 的差值。数值为冻结消融记录的单 seed 观察值。</sub>
+
+### 精度-计算量
 
 <p align="center">
   <img src="docs/figures/performance_macs.png" width="65%" alt="NYUv2 mIoU 与单次前向 MACs 对比"><br>
@@ -32,135 +88,37 @@ SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、�
   对比值取各论文报告数字。连线仅连接各家族 S/M/L 尺寸。</em>
 </p>
 
-### 与现有方法对比 — NYUv2（40 类，654 张测试图）
+## 模型库
 
-|  | 方法 | Backbone | 参数 (M) | 输入 H×W | 计算量 (G) | mIoU (%) ↑ |
-| --- | --- | --- | ---: | --- | ---: | ---: |
-| Ⅰ | Omnivore | Swin-T | 28.90 | 480×640 | 28.60 | 49.70 |
-| Ⅰ | TokenFusion | MiT-B2 | 26.00 | 480×640 | 54.90 | 53.30 |
-| Ⅰ | DFormer-T | DFormer-T | 6.00 | 480×640 | 14.70 | 51.80 |
-| Ⅰ | DFormer-S | DFormer-S | 18.70 | 480×640 | 28.70 | 53.60 |
-| Ⅰ | DFormer-B | DFormer-B | 29.50 | 480×640 | 45.30 | 55.60 |
-| Ⅰ | DFormerv2-S | DFormerv2-S | 26.70 | 480×640 | 33.90 | 56.00 |
-| Ⅰ | DFormer++-Tiny | DFormer++-T | 17.30 | 480×640 | 29.50 | 57.00 |
-| Ⅰ | **SEADP-Net-S (Ours)** | RF-DETR ViT-S | 26.25 | 480×640 | 28.37 | **60.16** |
-| Ⅱ | ESANet | ResNet-34 | 47.00 | 480×640 | 45.10 | 50.30 |
-| Ⅱ | EMSANet | ResNet-34 | 46.90 | 480×640 | 45.10 | 51.00 |
-| Ⅱ | TokenFusion | MiT-B3 | 45.90 | 480×640 | 94.00 | 54.20 |
-| Ⅱ | Omnivore | Swin-S | 50.60 | 480×640 | 56.00 | 52.70 |
-| Ⅱ | DFormer-L | DFormer-L | 39.00 | 480×640 | 69.30 | 57.20 |
-| Ⅱ | AsymFormer | B0+Conv-T | 33.00 | 480×640 | 39.40 | 55.30 |
-| Ⅱ | Sigma | VMamba-T | 48.30 | 480×640 | 89.50 | 53.90 |
-| Ⅱ | DFormerv2-B | DFormerv2-B | 53.90 | 480×640 | 67.20 | 57.70 |
-| Ⅱ | DFormer++-Small | DFormer++-S | 37.20 | 480×640 | 56.40 | 58.10 |
-| Ⅱ | **SEADP-Net-M (Ours)** | RF-DETR ViT-S | 28.95 | 480×640 | 56.78 | **61.22** |
-| Ⅲ | ACNet | ResNet-50 | 115.60 | 480×640 | 115.60 | 48.30 |
-| Ⅲ | SGNet | ResNet-101 | 64.70 | 480×640 | 108.50 | 51.10 |
-| Ⅲ | SA-Gate | ResNet-101 | 110.90 | 480×640 | 192.60 | 52.40 |
-| Ⅲ | CEN | ResNet-101 | 118.20 | 480×640 | 617.90 | 51.70 |
-| Ⅲ | CEN | ResNet-152 | 133.90 | 480×640 | 663.30 | 52.50 |
-| Ⅲ | ShapeConv | ResNext-101 | 106.80 | 480×640 | 168.40 | 51.30 |
-| Ⅲ | FRNet | ResNet-34 | 87.80 | 480×640 | 109.50 | 53.60 |
-| Ⅲ | PGDENet | ResNet-34 | 107.40 | 480×640 | 162.90 | 53.70 |
-| Ⅲ | MultiMAE | ViT-B | 95.40 | 640×640 | 403.80 | 56.00 |
-| Ⅲ | Omnivore | Swin-B | 90.10 | 480×640 | 99.50 | 54.00 |
-| Ⅲ | CMX | MiT-B2 | 66.60 | 480×640 | 66.90 | 54.40 |
-| Ⅲ | CMX | MiT-B4 | 139.90 | 480×640 | 134.00 | 56.30 |
-| Ⅲ | CMX | MiT-B5 | 181.10 | 480×640 | 167.50 | 56.90 |
-| Ⅲ | CMNeXt | MiT-B4 | 116.60 | 480×640 | 131.40 | 56.90 |
-| Ⅲ | GeminiFusion | MiT-B3 | 75.80 | 480×640 | 138.20 | 56.80 |
-| Ⅲ | Sigma | VMamba-S | 69.80 | 480×640 | 138.90 | 57.00 |
-| Ⅲ | DFormerv2-L | DFormerv2-L | 95.50 | 480×640 | 124.10 | 58.40 |
-| Ⅲ | DFormer++-Base | DFormer++-B | 66.70 | 480×640 | 97.50 | 59.00 |
-| Ⅲ | **SEADP-Net-L (Ours)** | RF-DETR ViT-S | 29.82 | 480×640 | 100.06 | **62.27** |
+| 版本 | NYUv2 SS / MSF | SUN RGB-D SS / MSF | 权重 |
+|---|---|---|---|
+| S | 58.27 / 60.16 | 52.76 / 53.69 | `weights/seadp-net-nyuv2-s.pth`、`weights/seadp-net-sunrgbd-s.pth` |
+| M | 60.13 / 61.22 | 53.83 / 54.66 | `weights/seadp-net-nyuv2-m.pth`、`weights/seadp-net-sunrgbd-m.pth` |
+| L | 60.94 / 62.27 | 54.76 / 55.28 | `weights/seadp-net-nyuv2-l.pth`、`weights/seadp-net-sunrgbd-l.pth` |
 
-### 与现有方法对比 — SUN RGB-D（37 类，5050 张测试图）
+六个权重均已附于 [v1.0.0 发布](https://github.com/forever678-arch/SEADP-Net/releases/tag/v1.0.0)；
+每个文件为三个列出中间快照的 FP32 等权参数平均（元数据已脱敏），双重 SHA256
+溯源见 [`model_zoo.json`](model_zoo.json)。
 
-|  | 方法 | Backbone | 参数 (M) | 输入 H×W | 计算量 (G) | mIoU (%) ↑ |
-| --- | --- | --- | ---: | --- | ---: | ---: |
-| Ⅰ | Omnivore | Swin-T | 28.90 | 530×730 | — | — |
-| Ⅰ | TokenFusion | MiT-B2 | 26.00 | 530×730 | 70.70 | — |
-| Ⅰ | DFormer-T | DFormer-T | 6.00 | 530×730 | 18.90 | 48.80 |
-| Ⅰ | DFormer-S | DFormer-S | 18.70 | 530×730 | 37.00 | 50.00 |
-| Ⅰ | DFormer-B | DFormer-B | 29.50 | 530×730 | 58.40 | 51.20 |
-| Ⅰ | DFormerv2-S | DFormerv2-S | 26.70 | 530×730 | 43.70 | 51.50 |
-| Ⅰ | DFormer++-Tiny | DFormer++-T | 17.30 | 530×730 | 39.30 | 51.50 |
-| Ⅰ | **SEADP-Net-S (Ours)** | RF-DETR ViT-S | 26.25 | 530×730 | 38.82 | **53.69** |
-| Ⅱ | ESANet | ResNet-34 | 47.00 | 480×640 | 34.90 | 45.00 |
-| Ⅱ | EMSANet | ResNet-34 | 46.90 | 530×730 | 58.70 | 48.40 |
-| Ⅱ | TokenFusion | MiT-B3 | 45.90 | 530×730 | 121.60 | — |
-| Ⅱ | Omnivore | Swin-S | 50.60 | 530×730 | — | — |
-| Ⅱ | DFormer-L | DFormer-L | 39.00 | 530×730 | 89.20 | 52.50 |
-| Ⅱ | AsymFormer | B0+Conv-T | 33.00 | 530×730 | 52.60 | 49.10 |
-| Ⅱ | Sigma | VMamba-T | 48.30 | 480×640 | 89.50 | 50.00 |
-| Ⅱ | DFormerv2-B | DFormerv2-B | 53.90 | 530×730 | 86.90 | 52.80 |
-| Ⅱ | DFormer++-Small | DFormer++-S | 37.20 | 530×730 | 74.60 | 52.70 |
-| Ⅱ | **SEADP-Net-M (Ours)** | RF-DETR ViT-S | 28.95 | 530×730 | 76.72 | **54.66** |
-| Ⅲ | ACNet | ResNet-50 | 115.60 | 530×730 | 150.60 | 48.10 |
-| Ⅲ | SGNet | ResNet-101 | 64.70 | 530×730 | 151.50 | 48.60 |
-| Ⅲ | SA-Gate | ResNet-101 | 110.90 | 530×730 | 248.70 | 49.40 |
-| Ⅲ | CEN | ResNet-101 | 118.20 | 530×730 | 789.20 | 50.20 |
-| Ⅲ | CEN | ResNet-152 | 133.90 | 530×730 | 848.30 | 51.10 |
-| Ⅲ | ShapeConv | ResNext-101 | 106.80 | 530×730 | 217.80 | 48.60 |
-| Ⅲ | FRNet | ResNet-34 | 87.80 | 530×730 | 142.70 | 51.80 |
-| Ⅲ | PGDENet | ResNet-34 | 107.40 | 530×730 | 212.20 | 51.00 |
-| Ⅲ | MultiMAE | ViT-B | 95.40 | 640×640 | 403.80 | — |
-| Ⅲ | Omnivore | Swin-B | 90.10 | 530×730 | — | — |
-| Ⅲ | CMX | MiT-B2 | 66.60 | 530×730 | 85.90 | 49.70 |
-| Ⅲ | CMX | MiT-B4 | 139.90 | 530×730 | 173.20 | 52.10 |
-| Ⅲ | CMX | MiT-B5 | 181.10 | 530×730 | 216.90 | 52.40 |
-| Ⅲ | CMNeXt | MiT-B4 | 116.60 | 530×730 | 169.60 | — |
-| Ⅲ | GeminiFusion | MiT-B3 | 75.80 | 530×730 | 179.00 | 52.70 |
-| Ⅲ | Sigma | VMamba-S | 69.80 | 480×640 | 138.90 | 52.40 |
-| Ⅲ | DFormerv2-L | DFormerv2-L | 95.50 | 530×730 | 160.50 | 53.30 |
-| Ⅲ | DFormer++-Base | DFormer++-B | 66.70 | 530×730 | 129.00 | 53.00 |
-| Ⅲ | **SEADP-Net-L (Ours)** | RF-DETR ViT-S | 29.82 | 530×730 | 140.10 | **55.28** |
+## 快速上手
 
-<sub>
-对照方法的参数、输入尺寸、计算量与精度均沿用原论文报告值——[DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) 与 [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf)；外部方法未在本项目环境下重训，跨论文计数范围不保证一致。“—”表示原论文未报告，或 SUN-RGBD 中由 DFormer++ 作者复测的精度（TokenFusion MiT-B2/B3、MultiMAE、CMNeXt MiT-B4，按要求省略）。SEADP-Net 计算量为完整网络单尺度一次前向的主要算子 MAC（Conv/Linear/attention，1 FMA=1 MAC，含 padding 与注意力矩阵乘法，不含逐元素操作）；精度为 MS5+flip。加粗为本文方法——这是完整系统的比较，不作单模块归因，也不作跨 seed 显著性声明。
-</sub>
-
-完整溯源——权重 SHA256、平均窗口、快照更新号、逐头成绩与评测记录——见
-[`model_zoo.json`](model_zoo.json) 与 [`eval_records/`](eval_records)（本代码库
-重跑的 SS/MSF 输出；每个数字均与冻结记录一致，最大 |偏差| 0.0005，唯一例外是一例
-跨 GPU +0.005，已在
-[`docs/equivalence_verification.md`](docs/equivalence_verification.md) 说明）。
-
-## 安装
+### 环境要求
 
 Python ≥ 3.11、PyTorch ≥ 2.4（在 2.8.0+cu128 上验证），以及钉定在上游 commit
-`e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe`（版本串 1.11.0.dev0）的 RF-DETR 包。
+`e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe` 的 RF-DETR 包。
 
 ```bash
-pip install -r requirements.txt   # 冻结的参考环境
+pip install -r requirements.txt
 git clone https://github.com/roboflow/rf-detr && cd rf-detr
 git checkout e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe && pip install -e .
-cd .. && pip install -e .         # seadpnet
+cd .. && pip install -e .
 ```
 
-还需要固定的预训练骨干文件 `rf-detr-seg-small.pt`
+还需固定预训练骨干文件 `rf-detr-seg-small.pt`
 （SHA256 `6de3da31b2572cac214a1c76cce4a92a13966d56390ac2b3a3de9a8dc2b2bca3`），
-可从 RF-DETR 发布页获取；下文所有命令都通过 `--rf-checkpoint` 指定其位置。
+命令通过 `--rf-checkpoint` 指定其位置。
 
-## 模型库（Model zoo）
-
-| 文件 | 数据集 / 版本 |
-|---|---|
-| `weights/seadp-net-nyuv2-s.pth` | NYUv2 S |
-| `weights/seadp-net-nyuv2-m.pth` | NYUv2 M |
-| `weights/seadp-net-nyuv2-l.pth` | NYUv2 L |
-| `weights/seadp-net-sunrgbd-s.pth` | SUN RGB-D S |
-| `weights/seadp-net-sunrgbd-m.pth` | SUN RGB-D M |
-| `weights/seadp-net-sunrgbd-l.pth` | SUN RGB-D L |
-
-每个文件都是三个列出中间快照的 FP32 等权参数平均（单模型推理产物，不是输出集成），
-元数据已脱敏；张量字节与对应训练平均产物逐位一致（双重 SHA256 记录在
-`model_zoo.json`）。六个权重均已附于 [v1.0.0 发布](https://github.com/forever678-arch/SEADP-Net/releases/tag/v1.0.0)；
-下载后请按 `model_zoo.json` 中的 SHA256 校验。
-
-## 数据准备
-
-不分发数据集本体；准备工具会下载官方来源（SHA256 钉死）并复现完全一致的处理后目录。
+### 数据准备
 
 ```bash
 # NYUv2 —— 先把五个钉定来源文件放到 data/nyuv2/raw/
@@ -174,7 +132,18 @@ python tools/prepare_sunrgbd.py data/sunrgbd_processed
 
 来源校验和与目录契约详见 [`docs/data_preparation.md`](docs/data_preparation.md)。
 
-## 评测
+### 训练
+
+```bash
+python tools/train_nyuv2.py --config configs/nyuv2/seadp-net-l.yaml --run-dir runs/nyu_l
+python tools/train_sunrgbd.py --config configs/sunrgbd/seadp-net-m.yaml --run-dir runs/sun_m
+```
+
+训练入口逐字保留原始训练协议（batch-32 更新、整批有效像素 CE 分母、BF16 前向 +
+FP32 CE、500 步 warmup 余弦 LR、`backbone.*encoder*` LR 分组）。**模型选择监控的
+是官方测试集的固定子集**（`test_sub100`、`test_sub500`）——它们不是独立验证集。
+
+### 评测
 
 ```bash
 # 单尺度
@@ -190,28 +159,11 @@ python tools/evaluate_sunrgbd.py --checkpoint weights/seadp-net-sunrgbd-m.pth \
     --scales 0.5 0.75 1.0 1.25 1.5 --flip --out sun_m_msf.json
 ```
 
-`load_experiment` 依据 checkpoint 自带 config 重建模型、精确比对架构元数据并以
-`strict=True` 加载权重；`--rf-checkpoint` 只覆盖固定预训练文件的位置。逐视图
-顺序（FP32 logits → 反翻转 → resize → 裁剪 → softmax → 视图平均 → 0.5/0.5 头
-融合 → argmax，全 split 累积混淆矩阵）规定于
-[`docs/evaluation_protocol.md`](docs/evaluation_protocol.md) —— 不要调换顺序。
+逐视图顺序（FP32 logits → 反翻转 → resize → 裁剪 → softmax → 视图平均 →
+0.5/0.5 头融合 → argmax）规定于
+[`docs/evaluation_protocol.md`](docs/evaluation_protocol.md)——不要调换顺序。
 
-## 训练
-
-```bash
-python tools/train_nyuv2.py --config configs/nyuv2/seadp-net-l.yaml --run-dir runs/nyu_l
-python tools/train_sunrgbd.py --config configs/sunrgbd/seadp-net-m.yaml --run-dir runs/sun_m
-```
-
-训练入口逐字保留原始训练数学：每个 AdamW 步对应一个有效 batch-32 更新
-（微批 CE **求和**后除以整批有效像素数）、BF16 前向 + FP32 CE、带 500 步 warmup
-的余弦 LR、梯度裁剪 0.1；LR 分组规则为仅 `backbone.*encoder*`（且不含 `depth`）
-的参数使用骨干学习率。快照平均使用 `tools/average_checkpoints.py`。
-
-**如实披露**：训练期模型选择监控的是官方**测试集**的固定子集（NYUv2
-`test_sub100`、SUN `test_sub500`）；它们不是独立验证集。
-
-## 推理
+### 推理
 
 ```bash
 python tools/infer.py --checkpoint weights/seadp-net-sunrgbd-l.pth \
@@ -220,49 +172,45 @@ python tools/infer.py --checkpoint weights/seadp-net-sunrgbd-l.pth \
     --out-seg seg.png --out-color seg_color.png
 ```
 
-`depth.png` 为 uint16 毫米（或 float32 米制 `.npy`）；`valid.png` 在原始传感器
-有效回波处非零。
-
 ## 仓库结构
 
 ```text
 SEADP-Net/
-  seadpnet/                  包本体
-    blocks.py                几何、ChannelNorm、解码器基础块
-    csp.py                   CSP 风格局部金字塔（自实现）
-    dual_head_model.py       共享编码器 + HR 主干 + 双解码器图
-    scaled_encoder_model.py  S/M 构建（编码器输入缩放，保留 12 层）
-    encoder_retention.py     完整编码器保留审计元数据
-    model.py                 三种 checkpoint 格式的加载器
-    losses.py                双 CE（整批有效像素分母）
-    rf/                      RF-DETR 适配层 + vendored 语义封装
-    data/                    NYUv2 / SUN RGB-D 数据加载、类别元数据
-    evaluation/              SS / MSF 协议、指标、SUN 原生 GT 评测
-  configs/                   nyuv2/{s,m,l}.yaml、sunrgbd/{s,m,l}.yaml
+  seadpnet/                  包本体（模型 / 数据 / 损失 / 评测）
+  configs/                   nyuv2/sunrgbd 的 S/M/L 训练配置
   tools/                     训练 / 评测 / 推理 / 平均 / 导出、
                              prepare_{nyuv2,sunrgbd} 数据管线
   tests/                     原始代码 vs 本包等价性测试
   docs/                      架构图、协议、数据准备、验证记录
   eval_records/              六权重验证评测 SS/MSF 输出
   model_zoo.json             权重、双重 SHA256、溯源、成绩
-  weights/                   本地发布权重（gitignored；见模型库）
 ```
 
 ## 验证
 
-本包已在训练服务器上对照原始训练代码验证：六个正式权重逐位加载一致（参数相同、
-逐头 logits 零差异、混淆矩阵相等）、训练入口逐字节复现原始首个增强批次、SS/MSF
-全量重跑与所有记录数字一致。详见
+六个正式权重与原始训练代码逐位加载一致（参数相同、逐头 logits 零差异、混淆
+矩阵相等）；训练入口逐字节复现原始首个增强批次；SS/MSF 全量重跑与所有记录
+数字一致。详见
 [`docs/equivalence_verification.md`](docs/equivalence_verification.md)。
+代码中的 checkpoint 格式串（如 `c11-csp-local-v1`）是内部加载键，不是模型名。
 
-代码与权重元数据中的 checkpoint 格式串（如 `c11-csp-local-v1`）是继承自训练谱系
-的内部加载键，不是模型名。
-
-## 许可与引用
+## 许可
 
 代码以 [MIT 许可证](LICENSE) 发布。预训练骨干与第三方组件仍遵循其自身许可
 （Apache-2.0，见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)）。
 每个发布版本均在 Zenodo 存档：[10.5281/zenodo.23294255](https://zenodo.org/doi/10.5281/zenodo.23294255)。
+
+## 引用
+
+```bibtex
+@software{seadpnet2026,
+  title  = {SEADP-Net: A Shared-Encoder Asymmetric Dual-Pyramid Network for RGB-D Semantic Segmentation},
+  author = {The SEADP-Net Authors},
+  year   = {2026},
+  doi    = {10.5281/zenodo.23294255},
+  url    = {https://github.com/forever678-arch/SEADP-Net}
+}
+```
 
 ## 致谢
 
