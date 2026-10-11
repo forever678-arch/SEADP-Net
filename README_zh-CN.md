@@ -20,6 +20,12 @@ SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、�
 | SUN RGB-D（37 类）| M | 28.95 M | 53.83 | 54.66 |
 | SUN RGB-D（37 类）| L | 29.82 M | 54.76 | 55.28 |
 
+![NYUv2 精度-计算量对比](docs/figures/performance_macs.png)
+*NYUv2 mIoU（MS5+flip）与单次前向 MACs 对比。SEADP-Net（五角星）使用发布的
+参数平均权重；对比方法为各论文报告值（CMX、TokenFusion、GeminiFusion、
+Omnivore、CMNeXt、DFormer、DFormer++、DFormerv2）。连线仅连接各家族 S/M/L
+尺寸，无拟合点。*
+
 完整溯源——权重 SHA256、平均窗口、快照更新号、逐头成绩与评测记录——见
 [`model_zoo.json`](model_zoo.json) 与 [`eval_records/`](eval_records)（本代码库
 重跑的 SS/MSF 输出；每个数字均与冻结记录一致，最大 |偏差| 0.0005，唯一例外是一例

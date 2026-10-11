@@ -29,6 +29,12 @@ depths and decoder width.
 | SUN RGB-D (37 cls) | M | 28.95 M | 53.83 | 54.66 |
 | SUN RGB-D (37 cls) | L | 29.82 M | 54.76 | 55.28 |
 
+![NYUv2 performance vs computation](docs/figures/performance_macs.png)
+*NYUv2 mIoU (MS5+flip) vs single-forward MACs. SEADP-Net (stars) uses the
+released avg-234 weights; comparison numbers are paper-reported values
+(CMX, TokenFusion, GeminiFusion, Omnivore, CMNeXt, DFormer, DFormer++,
+DFormerv2). Lines connect the S/M/L sizes of each family; no fitted points.*
+
 Full provenance — weight SHA256, averaging windows, snapshot updates,
 per-head scores and evaluation records — is in [`model_zoo.json`](model_zoo.json)
 and [`eval_records/`](eval_records) (SS/MSF rerun outputs of this code base;
