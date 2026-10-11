@@ -8,3 +8,4 @@ runs/
 eval_out/
 .ipynb_checkpoints/
 .release_id
+.rid
