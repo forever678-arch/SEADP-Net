@@ -23,50 +23,6 @@ patch 12）作为共享 RGB-D 上下文编码器，加入 stride-4 高分辨率�
 
 ## 主要结果
 
-| Model | Backbone | Params | NYUv2 In | NYUv2 MACs | NYUv2 mIoU | SUN-RGBD In | SUN-RGBD MACs | SUN-RGBD mIoU |
-|---|---|---|---|---:|---:|---|---:|---:|
-| Omnivore | Swin-T | 28.9M | 480×640 | 28.6G | 49.7 | 530×730 | – | – |
-| TokenFusion | MiT-B2 | 26.0M | 480×640 | 54.9G | 53.3 | 530×730 | – | – |
-| DFormer-T | DFormer-T | 6.0M | 480×640 | 14.7G | 51.8 | 530×730 | 18.9G | 48.8 |
-| DFormer-S | DFormer-S | 18.7M | 480×640 | 28.7G | 53.6 | 530×730 | 37.0G | 50.0 |
-| DFormer-B | DFormer-B | 29.5M | 480×640 | 45.3G | 55.6 | 530×730 | 58.4G | 51.2 |
-| DFormerv2-S | DFormerv2-S | 26.7M | 480×640 | 33.9G | 56.0 | 530×730 | 43.7G | 51.5 |
-| DFormer++-Tiny | DFormer++-T | 17.3M | 480×640 | 29.5G | 57.0 | 530×730 | 39.3G | 51.5 |
-| **SEADP-Net-S** | RF-DETR ViT-S | 26.3M | 480×640 | 28.4G | **60.2** | 530×730 | 38.8G | **53.7** |
-| ESANet | ResNet-34 | 47.0M | 480×640 | 45.1G | 50.3 | 480×640 | 34.9G | 45.0 |
-| EMSANet | ResNet-34 | 46.9M | 480×640 | 45.1G | 51.0 | 530×730 | 58.7G | 48.4 |
-| TokenFusion | MiT-B3 | 45.9M | 480×640 | 94.0G | 54.2 | 530×730 | – | – |
-| Omnivore | Swin-S | 50.6M | 480×640 | 56.0G | 52.7 | 530×730 | – | – |
-| DFormer-L | DFormer-L | 39.0M | 480×640 | 69.3G | 57.2 | 530×730 | 89.2G | 52.5 |
-| AsymFormer | B0+Conv-T | 33.0M | 480×640 | 39.4G | 55.3 | 530×730 | 52.6G | 49.1 |
-| Sigma | VMamba-T | 48.3M | 480×640 | 89.5G | 53.9 | 480×640 | 89.5G | 50.0 |
-| DFormerv2-B | DFormerv2-B | 53.9M | 480×640 | 67.2G | 57.7 | 530×730 | 86.9G | 52.8 |
-| DFormer++-Small | DFormer++-S | 37.2M | 480×640 | 56.4G | 58.1 | 530×730 | 74.6G | 52.7 |
-| **SEADP-Net-M** | RF-DETR ViT-S | 29.0M | 480×640 | 56.8G | **61.2** | 530×730 | 76.7G | **54.7** |
-| ACNet | ResNet-50 | 115.6M | 480×640 | 115.6G | 48.3 | 530×730 | 150.6G | 48.1 |
-| SGNet | ResNet-101 | 64.7M | 480×640 | 108.5G | 51.1 | 530×730 | 151.5G | 48.6 |
-| SA-Gate | ResNet-101 | 110.9M | 480×640 | 192.6G | 52.4 | 530×730 | 248.7G | 49.4 |
-| CEN | ResNet-101 | 118.2M | 480×640 | 617.9G | 51.7 | 530×730 | 789.2G | 50.2 |
-| CEN | ResNet-152 | 133.9M | 480×640 | 663.3G | 52.5 | 530×730 | 848.3G | 51.1 |
-| ShapeConv | ResNext-101 | 106.8M | 480×640 | 168.4G | 51.3 | 530×730 | 217.8G | 48.6 |
-| FRNet | ResNet-34 | 87.8M | 480×640 | 109.5G | 53.6 | 530×730 | 142.7G | 51.8 |
-| PGDENet | ResNet-34 | 107.4M | 480×640 | 162.9G | 53.7 | 530×730 | 212.2G | 51.0 |
-| MultiMAE | ViT-B | 95.4M | 640×640 | 403.8G | 56.0 | 640×640 | – | – |
-| Omnivore | Swin-B | 90.1M | 480×640 | 99.5G | 54.0 | 530×730 | – | – |
-| CMX | MiT-B2 | 66.6M | 480×640 | 66.9G | 54.4 | 530×730 | 85.9G | 49.7 |
-| CMX | MiT-B4 | 139.9M | 480×640 | 134.0G | 56.3 | 530×730 | 173.2G | 52.1 |
-| CMX | MiT-B5 | 181.1M | 480×640 | 167.5G | 56.9 | 530×730 | 216.9G | 52.4 |
-| CMNeXt | MiT-B4 | 116.6M | 480×640 | 131.4G | 56.9 | 530×730 | – | – |
-| GeminiFusion | MiT-B3 | 75.8M | 480×640 | 138.2G | 56.8 | 530×730 | 179.0G | 52.7 |
-| Sigma | VMamba-S | 69.8M | 480×640 | 138.9G | 57.0 | 480×640 | 138.9G | 52.4 |
-| DFormerv2-L | DFormerv2-L | 95.5M | 480×640 | 124.1G | 58.4 | 530×730 | 160.5G | 53.3 |
-| DFormer++-Base | DFormer++-B | 66.7M | 480×640 | 97.5G | 59.0 | 530×730 | 129.0G | 53.0 |
-| **SEADP-Net-L** | RF-DETR ViT-S | 29.8M | 480×640 | 100.1G | **62.3** | 530×730 | 140.1G | **55.3** |
-
-<sub>mIoU 为 %，MACs 为单次前向 G 值；"–"表示省略或不可得的结果，与论文一致。对照精度取 [DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) 与 [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf) 的论文报告值；外部方法未在本仓库环境重训，跨论文计数范围不保证一致。SEADP-Net 各行使用发布参数平均权重、五尺度+水平翻转；我们的 MACs 仅计 Conv/Linear/attention（1 FMA = 1 MAC）。</sub>
-
-### 精度-计算量
-
 <p align="center">
   <img src="docs/figures/performance_macs.png" width="65%" alt="NYUv2 mIoU 与单次前向 MACs 对比"><br>
   <em>NYUv2 mIoU（MS5+flip）与单次前向 MACs。SEADP-Net（五角星）为发布权重；
