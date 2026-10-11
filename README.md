@@ -80,7 +80,7 @@ Each file is an FP32 uniform parameter average of three listed mid-training
 snapshots (a single-model inference artifact, not an output ensemble) with
 sanitized metadata; the tensor bytes are bit-identical to the corresponding
 training average (dual SHA256 recorded in `model_zoo.json`). All six weights are attached to the
-[v0.1.0 release](https://github.com/forever678-arch/SEADP-Net/releases/tag/v0.1.0);
+[v1.0.0 release](https://github.com/forever678-arch/SEADP-Net/releases/tag/v1.0.0);
 verify each file against the SHA256 in `model_zoo.json`.
 
 ## Data preparation

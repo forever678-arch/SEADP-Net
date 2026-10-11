@@ -34,7 +34,7 @@
         "source_sha256": "e9c5ab7047d2481be3e71fa29c7e5632a110810270317ece224f82c0aeadcdce",
         "sha256": "8e110e9248544cf4a49189c50f5b316bc864409ddf829424b68f7f88e4bb2714",
         "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)",
-        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v0.1.0/seadp-net-nyuv2-s.pth"
+        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v1.0.0/seadp-net-nyuv2-s.pth"
       },
       "config": "configs/nyuv2/seadp-net-s.yaml",
       "evidence": "frozen paper record 2026-10-09; bit-exact package/original equivalence verified 2026-10-10"
@@ -66,7 +66,7 @@
         "source_sha256": "baced1fa38844ae43b1ca0827c31e009fb87c6ac35d0ec1f08869f15d184b4e5",
         "sha256": "dd877bd6cb0a7286614f4e96f2434c0a4d4c1d59dcb2f30c79e81e12bed37a0b",
         "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)",
-        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v0.1.0/seadp-net-nyuv2-m.pth"
+        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v1.0.0/seadp-net-nyuv2-m.pth"
       },
       "config": "configs/nyuv2/seadp-net-m.yaml",
       "evidence": "frozen paper record 2026-10-09; bit-exact package/original equivalence verified 2026-10-10"
@@ -98,7 +98,7 @@
         "source_sha256": "99d99506777d4d71e0d60408f1d5818de5090e8c075e9c6dbb23e51d75d35d44",
         "sha256": "4e1a90623206f0665d58381f89d3add21abeb215d5fd550cd566b238bedcbf1b",
         "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)",
-        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v0.1.0/seadp-net-nyuv2-l.pth"
+        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v1.0.0/seadp-net-nyuv2-l.pth"
       },
       "config": "configs/nyuv2/seadp-net-l.yaml",
       "evidence": "frozen paper record 2026-10-09; bit-exact package/original equivalence verified 2026-10-10"
@@ -135,7 +135,7 @@
         "source_sha256": "2618dd8e63700bb722b5c44524bbcd8b649a8c0a4527a621d78cf77e50985df0",
         "sha256": "fc82b2dba3aa57432ee244aef6add854b780c3a4356f42c184c5ac55a9c4a492",
         "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)",
-        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v0.1.0/seadp-net-sunrgbd-s.pth"
+        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v1.0.0/seadp-net-sunrgbd-s.pth"
       },
       "config": "configs/sunrgbd/seadp-net-s.yaml",
       "evidence": "frozen record 2026-10-09 + checkpoint averaging metadata; bit-exact equivalence verified 2026-10-10"
@@ -172,7 +172,7 @@
         "source_sha256": "8f5ecd3ef5bbe056a16f1616d0cb9456623445d3024a8777d55aa26f7f1f6fcd",
         "sha256": "948f417b450baf12e5622c0b0e4731fd1556c98d2d5db592d08ffb24bdd8a8fe",
         "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)",
-        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v0.1.0/seadp-net-sunrgbd-m.pth"
+        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v1.0.0/seadp-net-sunrgbd-m.pth"
       },
       "config": "configs/sunrgbd/seadp-net-m.yaml",
       "evidence": "official SS/MSF JSONs + averaging metadata on the training host; bit-exact equivalence verified 2026-10-10"
@@ -210,7 +210,7 @@
         "source_sha256": "ad44fa916abebf22962ea965d3878899d933d1e7fc8732f4ffc76eb8609c6693",
         "sha256": "1c6a86afcfa87439ceb64ae225c6160a7d2dea4d97a866ac830c75dec350407d",
         "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)",
-        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v0.1.0/seadp-net-sunrgbd-l.pth"
+        "download": "https://github.com/forever678-arch/SEADP-Net/releases/download/v1.0.0/seadp-net-sunrgbd-l.pth"
       },
       "config": "configs/sunrgbd/seadp-net-l.yaml",
       "evidence": "frozen record 2026-10-09 + checkpoint averaging metadata; bit-exact equivalence verified 2026-10-10"

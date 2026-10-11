@@ -4,7 +4,7 @@ message: "If you use SEADP-Net in your research, please cite it and the RF-DETR 
 type: software
 authors:
   - name: "The SEADP-Net Authors"
-version: 0.1.0
+version: 1.0.0
 date-released: "2026-10-11"
 license: MIT
 repository-code: "https://github.com/forever678-arch/SEADP-Net"

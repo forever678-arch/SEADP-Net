@@ -65,7 +65,7 @@ cd .. && pip install -e .         # seadpnet
 
 每个文件都是三个列出中间快照的 FP32 等权参数平均（单模型推理产物，不是输出集成），
 元数据已脱敏；张量字节与对应训练平均产物逐位一致（双重 SHA256 记录在
-`model_zoo.json`）。六个权重均已附于 [v0.1.0 发布](https://github.com/forever678-arch/SEADP-Net/releases/tag/v0.1.0)；
+`model_zoo.json`）。六个权重均已附于 [v1.0.0 发布](https://github.com/forever678-arch/SEADP-Net/releases/tag/v1.0.0)；
 下载后请按 `model_zoo.json` 中的 SHA256 校验。
 
 ## 数据准备
