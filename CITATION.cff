@@ -3,7 +3,7 @@ title: "SEADP-Net: A Shared-Encoder Asymmetric Dual-Pyramid Network for RGB-D Se
 message: "If you use SEADP-Net in your research, please cite it and the RF-DETR pretrained backbone."
 type: software
 authors:
-  - name: "SEADP-Net Authors"   # TODO: replace with the real author list before release
+  - name: "The SEADP-Net Authors"
 version: 0.1.0
 date-released: "2026-10-11"     # TODO: set the actual release date
 license: MIT
