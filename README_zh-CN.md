@@ -32,6 +32,94 @@ SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、�
   对比值取各论文报告数字。连线仅连接各家族 S/M/L 尺寸。</em>
 </p>
 
+### 与现有方法对比 — NYUv2（40 类，654 张测试图）
+
+|  | 方法 | Backbone | 参数 (M) | 输入 H×W | 计算量 (G) | mIoU (%) ↑ |
+| --- | --- | --- | ---: | --- | ---: | ---: |
+| Ⅰ | Omnivore | Swin-T | 28.90 | 480×640 | 28.60 | 49.70 |
+| Ⅰ | TokenFusion | MiT-B2 | 26.00 | 480×640 | 54.90 | 53.30 |
+| Ⅰ | DFormer-T | DFormer-T | 6.00 | 480×640 | 14.70 | 51.80 |
+| Ⅰ | DFormer-S | DFormer-S | 18.70 | 480×640 | 28.70 | 53.60 |
+| Ⅰ | DFormer-B | DFormer-B | 29.50 | 480×640 | 45.30 | 55.60 |
+| Ⅰ | DFormerv2-S | DFormerv2-S | 26.70 | 480×640 | 33.90 | 56.00 |
+| Ⅰ | DFormer++-Tiny | DFormer++-T | 17.30 | 480×640 | 29.50 | 57.00 |
+| Ⅰ | **SEADP-Net-S (Ours)** | RF-DETR ViT-S | 26.25 | 480×640 | 28.37 | **60.16** |
+| Ⅱ | ESANet | ResNet-34 | 47.00 | 480×640 | 45.10 | 50.30 |
+| Ⅱ | EMSANet | ResNet-34 | 46.90 | 480×640 | 45.10 | 51.00 |
+| Ⅱ | TokenFusion | MiT-B3 | 45.90 | 480×640 | 94.00 | 54.20 |
+| Ⅱ | Omnivore | Swin-S | 50.60 | 480×640 | 56.00 | 52.70 |
+| Ⅱ | DFormer-L | DFormer-L | 39.00 | 480×640 | 69.30 | 57.20 |
+| Ⅱ | AsymFormer | B0+Conv-T | 33.00 | 480×640 | 39.40 | 55.30 |
+| Ⅱ | Sigma | VMamba-T | 48.30 | 480×640 | 89.50 | 53.90 |
+| Ⅱ | DFormerv2-B | DFormerv2-B | 53.90 | 480×640 | 67.20 | 57.70 |
+| Ⅱ | DFormer++-Small | DFormer++-S | 37.20 | 480×640 | 56.40 | 58.10 |
+| Ⅱ | **SEADP-Net-M (Ours)** | RF-DETR ViT-S | 28.95 | 480×640 | 56.78 | **61.22** |
+| Ⅲ | ACNet | ResNet-50 | 115.60 | 480×640 | 115.60 | 48.30 |
+| Ⅲ | SGNet | ResNet-101 | 64.70 | 480×640 | 108.50 | 51.10 |
+| Ⅲ | SA-Gate | ResNet-101 | 110.90 | 480×640 | 192.60 | 52.40 |
+| Ⅲ | CEN | ResNet-101 | 118.20 | 480×640 | 617.90 | 51.70 |
+| Ⅲ | CEN | ResNet-152 | 133.90 | 480×640 | 663.30 | 52.50 |
+| Ⅲ | ShapeConv | ResNext-101 | 106.80 | 480×640 | 168.40 | 51.30 |
+| Ⅲ | FRNet | ResNet-34 | 87.80 | 480×640 | 109.50 | 53.60 |
+| Ⅲ | PGDENet | ResNet-34 | 107.40 | 480×640 | 162.90 | 53.70 |
+| Ⅲ | MultiMAE | ViT-B | 95.40 | 640×640 | 403.80 | 56.00 |
+| Ⅲ | Omnivore | Swin-B | 90.10 | 480×640 | 99.50 | 54.00 |
+| Ⅲ | CMX | MiT-B2 | 66.60 | 480×640 | 66.90 | 54.40 |
+| Ⅲ | CMX | MiT-B4 | 139.90 | 480×640 | 134.00 | 56.30 |
+| Ⅲ | CMX | MiT-B5 | 181.10 | 480×640 | 167.50 | 56.90 |
+| Ⅲ | CMNeXt | MiT-B4 | 116.60 | 480×640 | 131.40 | 56.90 |
+| Ⅲ | GeminiFusion | MiT-B3 | 75.80 | 480×640 | 138.20 | 56.80 |
+| Ⅲ | Sigma | VMamba-S | 69.80 | 480×640 | 138.90 | 57.00 |
+| Ⅲ | DFormerv2-L | DFormerv2-L | 95.50 | 480×640 | 124.10 | 58.40 |
+| Ⅲ | DFormer++-Base | DFormer++-B | 66.70 | 480×640 | 97.50 | 59.00 |
+| Ⅲ | **SEADP-Net-L (Ours)** | RF-DETR ViT-S | 29.82 | 480×640 | 100.06 | **62.27** |
+
+### 与现有方法对比 — SUN RGB-D（37 类，5050 张测试图）
+
+|  | 方法 | Backbone | 参数 (M) | 输入 H×W | 计算量 (G) | mIoU (%) ↑ |
+| --- | --- | --- | ---: | --- | ---: | ---: |
+| Ⅰ | Omnivore | Swin-T | 28.90 | 530×730 | — | — |
+| Ⅰ | TokenFusion | MiT-B2 | 26.00 | 530×730 | 70.70 | — |
+| Ⅰ | DFormer-T | DFormer-T | 6.00 | 530×730 | 18.90 | 48.80 |
+| Ⅰ | DFormer-S | DFormer-S | 18.70 | 530×730 | 37.00 | 50.00 |
+| Ⅰ | DFormer-B | DFormer-B | 29.50 | 530×730 | 58.40 | 51.20 |
+| Ⅰ | DFormerv2-S | DFormerv2-S | 26.70 | 530×730 | 43.70 | 51.50 |
+| Ⅰ | DFormer++-Tiny | DFormer++-T | 17.30 | 530×730 | 39.30 | 51.50 |
+| Ⅰ | **SEADP-Net-S (Ours)** | RF-DETR ViT-S | 26.25 | 530×730 | 38.82 | **53.69** |
+| Ⅱ | ESANet | ResNet-34 | 47.00 | 480×640 | 34.90 | 45.00 |
+| Ⅱ | EMSANet | ResNet-34 | 46.90 | 530×730 | 58.70 | 48.40 |
+| Ⅱ | TokenFusion | MiT-B3 | 45.90 | 530×730 | 121.60 | — |
+| Ⅱ | Omnivore | Swin-S | 50.60 | 530×730 | — | — |
+| Ⅱ | DFormer-L | DFormer-L | 39.00 | 530×730 | 89.20 | 52.50 |
+| Ⅱ | AsymFormer | B0+Conv-T | 33.00 | 530×730 | 52.60 | 49.10 |
+| Ⅱ | Sigma | VMamba-T | 48.30 | 480×640 | 89.50 | 50.00 |
+| Ⅱ | DFormerv2-B | DFormerv2-B | 53.90 | 530×730 | 86.90 | 52.80 |
+| Ⅱ | DFormer++-Small | DFormer++-S | 37.20 | 530×730 | 74.60 | 52.70 |
+| Ⅱ | **SEADP-Net-M (Ours)** | RF-DETR ViT-S | 28.95 | 530×730 | 76.72 | **54.66** |
+| Ⅲ | ACNet | ResNet-50 | 115.60 | 530×730 | 150.60 | 48.10 |
+| Ⅲ | SGNet | ResNet-101 | 64.70 | 530×730 | 151.50 | 48.60 |
+| Ⅲ | SA-Gate | ResNet-101 | 110.90 | 530×730 | 248.70 | 49.40 |
+| Ⅲ | CEN | ResNet-101 | 118.20 | 530×730 | 789.20 | 50.20 |
+| Ⅲ | CEN | ResNet-152 | 133.90 | 530×730 | 848.30 | 51.10 |
+| Ⅲ | ShapeConv | ResNext-101 | 106.80 | 530×730 | 217.80 | 48.60 |
+| Ⅲ | FRNet | ResNet-34 | 87.80 | 530×730 | 142.70 | 51.80 |
+| Ⅲ | PGDENet | ResNet-34 | 107.40 | 530×730 | 212.20 | 51.00 |
+| Ⅲ | MultiMAE | ViT-B | 95.40 | 640×640 | 403.80 | — |
+| Ⅲ | Omnivore | Swin-B | 90.10 | 530×730 | — | — |
+| Ⅲ | CMX | MiT-B2 | 66.60 | 530×730 | 85.90 | 49.70 |
+| Ⅲ | CMX | MiT-B4 | 139.90 | 530×730 | 173.20 | 52.10 |
+| Ⅲ | CMX | MiT-B5 | 181.10 | 530×730 | 216.90 | 52.40 |
+| Ⅲ | CMNeXt | MiT-B4 | 116.60 | 530×730 | 169.60 | — |
+| Ⅲ | GeminiFusion | MiT-B3 | 75.80 | 530×730 | 179.00 | 52.70 |
+| Ⅲ | Sigma | VMamba-S | 69.80 | 480×640 | 138.90 | 52.40 |
+| Ⅲ | DFormerv2-L | DFormerv2-L | 95.50 | 530×730 | 160.50 | 53.30 |
+| Ⅲ | DFormer++-Base | DFormer++-B | 66.70 | 530×730 | 129.00 | 53.00 |
+| Ⅲ | **SEADP-Net-L (Ours)** | RF-DETR ViT-S | 29.82 | 530×730 | 140.10 | **55.28** |
+
+<sub>
+对照方法的参数、输入尺寸、计算量与精度均沿用原论文报告值——[DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) 与 [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf)；外部方法未在本项目环境下重训，跨论文计数范围不保证一致。“—”表示原论文未报告，或 SUN-RGBD 中由 DFormer++ 作者复测的精度（TokenFusion MiT-B2/B3、MultiMAE、CMNeXt MiT-B4，按要求省略）。SEADP-Net 计算量为完整网络单尺度一次前向的主要算子 MAC（Conv/Linear/attention，1 FMA=1 MAC，含 padding 与注意力矩阵乘法，不含逐元素操作）；精度为 MS5+flip。加粗为本文方法——这是完整系统的比较，不作单模块归因，也不作跨 seed 显著性声明。
+</sub>
+
 完整溯源——权重 SHA256、平均窗口、快照更新号、逐头成绩与评测记录——见
 [`model_zoo.json`](model_zoo.json) 与 [`eval_records/`](eval_records)（本代码库
 重跑的 SS/MSF 输出；每个数字均与冻结记录一致，最大 |偏差| 0.0005，唯一例外是一例
