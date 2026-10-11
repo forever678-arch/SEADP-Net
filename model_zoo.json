@@ -1,0 +1,213 @@
+{
+  "method": "SEADP-Net (Shared-Encoder Asymmetric Dual-Pyramid Network)",
+  "pretrained_source": {
+    "file": "rf-detr-seg-small.pt",
+    "sha256": "6de3da31b2572cac214a1c76cce4a92a13966d56390ac2b3a3de9a8dc2b2bca3",
+    "description": "RF-DETR SegSmall public checkpoint; fixed initialization source"
+  },
+  "monitor_disclaimer": "Training-time monitoring used fixed subsets of the official test splits (NYU test_sub100, SUN test_sub500); these are NOT independent validation sets.",
+  "entries": [
+    {
+      "dataset": "nyuv2",
+      "variant": "S",
+      "num_classes": 40,
+      "input_hw": [
+        480,
+        648
+      ],
+      "checkpoint_format": "c11-hrd-v2-v1",
+      "parameters": 26253312,
+      "gmac_primary_ops": 28.369733,
+      "gmac_native_thop": 27.220421,
+      "miou_ss_percent": 58.2737,
+      "miou_ms5_flip_percent": 60.1615,
+      "weights": {
+        "file": "weights/seadp-net-nyuv2-s.pth",
+        "averaging": "uniform FP32 model-state mean of the listed snapshots",
+        "sources_sha256": [],
+        "source_archive": "authors-private-archive/nyuv2-s (byte-identical, see sha256)",
+        "snapshot_updates": [
+          2000,
+          3000,
+          4000
+        ],
+        "source_sha256": "e9c5ab7047d2481be3e71fa29c7e5632a110810270317ece224f82c0aeadcdce",
+        "sha256": "8e110e9248544cf4a49189c50f5b316bc864409ddf829424b68f7f88e4bb2714",
+        "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)"
+      },
+      "config": "configs/nyuv2/seadp-net-s.yaml",
+      "evidence": "frozen paper record 2026-10-09; bit-exact package/original equivalence verified 2026-10-10"
+    },
+    {
+      "dataset": "nyuv2",
+      "variant": "M",
+      "num_classes": 40,
+      "input_hw": [
+        480,
+        648
+      ],
+      "checkpoint_format": "c11-hrd-v2-v1",
+      "parameters": 28952528,
+      "gmac_primary_ops": 56.7818,
+      "gmac_native_thop": 51.143536,
+      "miou_ss_percent": 60.125,
+      "miou_ms5_flip_percent": 61.2248,
+      "weights": {
+        "file": "weights/seadp-net-nyuv2-m.pth",
+        "averaging": "uniform FP32 model-state mean of the listed snapshots",
+        "sources_sha256": [],
+        "source_archive": "authors-private-archive/nyuv2-m (byte-identical, see sha256)",
+        "snapshot_updates": [
+          2000,
+          3000,
+          4000
+        ],
+        "source_sha256": "baced1fa38844ae43b1ca0827c31e009fb87c6ac35d0ec1f08869f15d184b4e5",
+        "sha256": "dd877bd6cb0a7286614f4e96f2434c0a4d4c1d59dcb2f30c79e81e12bed37a0b",
+        "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)"
+      },
+      "config": "configs/nyuv2/seadp-net-m.yaml",
+      "evidence": "frozen paper record 2026-10-09; bit-exact package/original equivalence verified 2026-10-10"
+    },
+    {
+      "dataset": "nyuv2",
+      "variant": "L",
+      "num_classes": 40,
+      "input_hw": [
+        480,
+        648
+      ],
+      "checkpoint_format": "c11-csp-local-v1",
+      "parameters": 29822544,
+      "gmac_primary_ops": 100.058662,
+      "gmac_native_thop": 81.438172,
+      "miou_ss_percent": 60.9428,
+      "miou_ms5_flip_percent": 62.2673,
+      "weights": {
+        "file": "weights/seadp-net-nyuv2-l.pth",
+        "averaging": "uniform FP32 model-state mean of the listed snapshots",
+        "sources_sha256": [],
+        "source_archive": "authors-private-archive/nyuv2-l (byte-identical, see sha256)",
+        "snapshot_updates": [
+          2000,
+          3000,
+          4000
+        ],
+        "source_sha256": "99d99506777d4d71e0d60408f1d5818de5090e8c075e9c6dbb23e51d75d35d44",
+        "sha256": "4e1a90623206f0665d58381f89d3add21abeb215d5fd550cd566b238bedcbf1b",
+        "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)"
+      },
+      "config": "configs/nyuv2/seadp-net-l.yaml",
+      "evidence": "frozen paper record 2026-10-09; bit-exact package/original equivalence verified 2026-10-10"
+    },
+    {
+      "dataset": "sunrgbd",
+      "variant": "S",
+      "num_classes": 37,
+      "input_hw": [
+        552,
+        744
+      ],
+      "checkpoint_format": "seadp-sunrgbd-v1",
+      "parameters": 26252826,
+      "gmac_primary_ops": 38.82,
+      "miou_ss_percent": 52.759,
+      "miou_ms5_flip_percent": 53.693,
+      "weights": {
+        "file": "weights/seadp-net-sunrgbd-s.pth",
+        "averaging": "uniform FP32 model-state mean of the listed snapshots",
+        "sources_sha256": [
+          "41d9f9c6697d569750172d148fe6c5938accc36393d71d10eb5821454256e95f",
+          "494729c011996424ec516d8f8f5e281579512ba640c161d978a84bf0600be833",
+          "fcabe01ccc6447db16a65ce0f70fea148534c301c92bb092befeaf6a7f0f7a6a"
+        ],
+        "source_archive": "authors-private-archive/sunrgbd-s (byte-identical, see sha256)",
+        "snapshot_updates": [
+          6500,
+          7500,
+          8500
+        ],
+        "backbone_lr": 1.41e-06,
+        "checkpoint_model_name": "SEADP-Net-S",
+        "source_sha256": "2618dd8e63700bb722b5c44524bbcd8b649a8c0a4527a621d78cf77e50985df0",
+        "sha256": "fc82b2dba3aa57432ee244aef6add854b780c3a4356f42c184c5ac55a9c4a492",
+        "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)"
+      },
+      "config": "configs/sunrgbd/seadp-net-s.yaml",
+      "evidence": "frozen record 2026-10-09 + checkpoint averaging metadata; bit-exact equivalence verified 2026-10-10"
+    },
+    {
+      "dataset": "sunrgbd",
+      "variant": "M",
+      "num_classes": 37,
+      "input_hw": [
+        552,
+        744
+      ],
+      "checkpoint_format": "seadp-sunrgbd-v1",
+      "parameters": 28951946,
+      "gmac_primary_ops": 76.72,
+      "miou_ss_percent": 53.833370910003644,
+      "miou_ms5_flip_percent": 54.66008741150773,
+      "weights": {
+        "file": "weights/seadp-net-sunrgbd-m.pth",
+        "averaging": "uniform FP32 model-state mean of the listed snapshots",
+        "sources_sha256": [
+          "be42b5b1ddec16c0723c4e6032e49039e5adbe396dddc71b5318fd3a7edd36e7",
+          "5422610ca7bd27b88bdc86dbb5421209d4304e0ebb24bbefe26272e9c98c8c46",
+          "6f8c67e06cbae3b82d5f9ce94487ffc538dd043e2bb1c034b25cabb1d4a612b1"
+        ],
+        "source_archive": "authors-private-archive/sunrgbd-m (byte-identical, see sha256)",
+        "snapshot_updates": [
+          6500,
+          7500,
+          8500
+        ],
+        "backbone_lr": 1.41e-06,
+        "checkpoint_model_name": "SEADP-Net-M",
+        "source_sha256": "8f5ecd3ef5bbe056a16f1616d0cb9456623445d3024a8777d55aa26f7f1f6fcd",
+        "sha256": "948f417b450baf12e5622c0b0e4731fd1556c98d2d5db592d08ffb24bdd8a8fe",
+        "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)"
+      },
+      "config": "configs/sunrgbd/seadp-net-m.yaml",
+      "evidence": "official SS/MSF JSONs + averaging metadata on the training host; bit-exact equivalence verified 2026-10-10"
+    },
+    {
+      "dataset": "sunrgbd",
+      "variant": "L",
+      "num_classes": 37,
+      "input_hw": [
+        552,
+        744
+      ],
+      "checkpoint_format": "seadp-sunrgbd-v1",
+      "parameters": 29821770,
+      "gmac_primary_ops": 140.1,
+      "miou_ss_percent": 54.756,
+      "miou_ms5_flip_percent": 55.278,
+      "weights": {
+        "file": "weights/seadp-net-sunrgbd-l.pth",
+        "averaging": "uniform FP32 model-state mean of the listed snapshots",
+        "sources_sha256": [
+          "617afb49591cf5c09c9ab42a82b2542eb4b99eb916180912bc7d8b203cab1440",
+          "3f3c3a640806808e6b9ac9995099b2e1c05cec0e0f5652338a8467588e962777",
+          "f758519bced8b0dcede4fe6ffb6d4be0a20b8724ff51fd2162d17e6f36bb0537"
+        ],
+        "source_archive": "authors-private-archive/sunrgbd-l (byte-identical, see sha256)",
+        "snapshot_updates": [
+          6500,
+          7500,
+          8500
+        ],
+        "backbone_lr": 1.41e-06,
+        "checkpoint_model_name": "SEADP-Net-L",
+        "architecture_schema": "first-run legacy schema (constant experiment_name, no encoder_input_scale field); the loader reproduces it verbatim",
+        "source_sha256": "ad44fa916abebf22962ea965d3878899d933d1e7fc8732f4ffc76eb8609c6693",
+        "sha256": "1c6a86afcfa87439ceb64ae225c6160a7d2dea4d97a866ac830c75dec350407d",
+        "release_export": "tools/export_release_checkpoint.py (metadata sanitized, tensors bit-identical to source)"
+      },
+      "config": "configs/sunrgbd/seadp-net-l.yaml",
+      "evidence": "frozen record 2026-10-09 + checkpoint averaging metadata; bit-exact equivalence verified 2026-10-10"
+    }
+  ]
+}

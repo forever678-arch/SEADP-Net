@@ -1,0 +1,62 @@
+# SEADP-Net-S on NYUv2 — the formal training configuration, values unchanged.
+# Merged from the original base and variant YAMLs; every value preserved.
+model_name: SEADP-Net-S
+pretrained_checkpoint: weights/rf-detr-seg-small.pt
+data_root: data/nyuv2
+valid_root: depth_validity
+seed: 42
+max_parameters: 100000000
+loader_batch: 32
+micro_batch: 32   # formal S/M runs fit the whole batch-32 in one microbatch (recorded in checkpoints)
+grad_accumulation: 1
+effective_batch: 32
+train_updates: 10000
+warmup_updates: 500
+min_lr_ratio: 0.01
+head_lr: 0.000141
+backbone_lr: 0.0000141
+weight_decay: 0.0001
+gradient_clip: 0.1
+augmentation:
+  hflip: 0.5
+  color_jitter: [0.2, 0.2, 0.2, 0.05]
+  scale_range: [0.75, 1.25]
+monitor_split: test_sub100
+monitor_scales: [0.5, 0.75, 1.0, 1.25, 1.5]
+monitor_flip: true
+eval_protocol: nyuv2_image_views
+eval_batch: 2
+val_interval: 500
+save_interval: 100
+snapshot_updates: [2000, 3000, 4000, 5000, 6000, 7000, 10000]
+average_updates: [2000, 3000, 4000]        # formal avg234
+secondary_average_updates: [3000, 4000, 5000]
+num_workers: 4
+log_interval: 25
+head_a_source: rgb
+head_b_source: depth
+num_classes: 40
+encoder_keep_layers: [0,1,2,3,4,5,6,7,8,9,10,11]   # keep the whole 12-block shared encoder (scale only changes the input size)
+encoder_input_scale: 0.5
+pyramid_widths: [24, 48, 64]
+decoder_width: 80
+expected_parameters: 26253312
+compute_budget_gmac: 29.5
+shared_injection: standard
+branch_a:
+  kind: csp
+  widths: [48, 96, 192]
+  repeats: [1, 1, 1]
+  context_p5: false
+  topdown: false
+branch_b:
+  kind: csp
+  widths: [48, 96, 192]
+  repeats: [1, 2, 2]
+  context_p5: false
+  topdown: false
+loss: 0.5*CE_A+0.5*CE_B
+fusion: fixed_equal_probability_mean
+debug_only: false
+training_authorized: true
+target_gpu_gib: 28.0

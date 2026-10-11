@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "seadpnet"
+version = "0.1.0"
+description = "SEADP-Net: Shared-Encoder Asymmetric Dual-Pyramid Network for RGB-D semantic segmentation"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+    "torch>=2.4",
+    "torchvision",
+    "transformers",
+    "timm",
+    "numpy",
+    "pillow",
+    "PyYAML",
+    "h5py",
+    "requests",
+    "opencv-python",
+]
+
+[tool.setuptools.packages.find]
+include = ["seadpnet*"]

@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: "SEADP-Net: A Shared-Encoder Asymmetric Dual-Pyramid Network for RGB-D Semantic Segmentation"
+message: "If you use SEADP-Net in your research, please cite it and the RF-DETR pretrained backbone."
+type: software
+authors:
+  - name: "SEADP-Net Authors"   # TODO: replace with the real author list before release
+version: 0.1.0
+date-released: "2026-10-11"     # TODO: set the actual release date
+license: MIT
+repository-code: "https://github.com/TODO/SEADP-Net"   # TODO: final repository URL
+keywords:
+  - RGB-D semantic segmentation
+  - deep learning
+  - computer vision

@@ -1,0 +1,17 @@
+# Frozen from the training environment (Python 3.12.3, CUDA 12.8):
+# rfdetr is installed from the vendored upstream tree at commit
+# e96a71476bf09c738fa861c3d1ee2c8caeaa5ffe (2026-09-18), pip name rfdetr==1.11.0.dev0.
+torch==2.8.0
+torchvision==0.23.0
+transformers==5.17.0
+timm==0.9.16
+numpy==2.3.2
+opencv-python==5.0.0.93
+pillow==11.3.0
+scipy==1.18.1
+h5py==3.15.1
+requests==2.32.5
+PyYAML==6.0.2
+safetensors==0.8.0
+supervision==0.30.3
+ruamel.yaml==0.17.21
