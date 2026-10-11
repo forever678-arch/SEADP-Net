@@ -4,6 +4,8 @@
 
 English | [中文](README_zh-CN.md)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23294255.svg)](https://zenodo.org/doi/10.5281/zenodo.23294255)
+
 <p align="center">
   <img src="docs/figures/architecture_overview.png" width="88%" alt="SEADP-Net architecture overview"><br>
   <em>The shared RGB-D context encoder (SCE) and high-resolution stem (HRS) feed two

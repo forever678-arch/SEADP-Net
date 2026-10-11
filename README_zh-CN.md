@@ -4,6 +4,8 @@
 
 [English](README.md) | 中文
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23294255.svg)](https://zenodo.org/doi/10.5281/zenodo.23294255)
+
 <p align="center">
   <img src="docs/figures/architecture_overview.png" width="88%" alt="SEADP-Net 架构总览"><br>
   <em>共享 RGB-D 上下文编码器（SCE）与高分辨率主干（HRS）同时供给两个非对称
@@ -172,7 +174,7 @@ SEADP-Net/
 
 代码以 [MIT 许可证](LICENSE) 发布。预训练骨干与第三方组件仍遵循其自身许可
 （Apache-2.0，见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)）。
-每个发布版本将通过 Zenodo 提供存档 DOI。
+每个发布版本均在 Zenodo 存档：[10.5281/zenodo.23294255](https://zenodo.org/doi/10.5281/zenodo.23294255)。
 
 ## 致谢
 

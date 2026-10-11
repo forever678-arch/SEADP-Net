@@ -7,6 +7,10 @@ authors:
 version: 1.0.0
 date-released: "2026-10-11"
 license: MIT
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23294255"
+    description: "Concept DOI (always resolves to the latest version)"
 repository-code: "https://github.com/forever678-arch/SEADP-Net"
 keywords:
   - RGB-D semantic segmentation
