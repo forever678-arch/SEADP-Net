@@ -68,21 +68,6 @@ decoder width.
 
 <sub>mIoU in %, MACs in G for a single forward pass; "–" indicates omitted or unavailable results, following the paper. Reference accuracies are the reported values from [DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) and [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf); external methods are not retrained here, and counting scopes are not guaranteed identical across papers. SEADP-Net rows use the released avg weights with five scales + horizontal flipping; our MACs count Conv/Linear/attention only (1 FMA = 1 MAC).</sub>
 
-### Architecture ablations
-
-| Configuration | Params (M) | SS (%) | MSF (%) | ΔSS (pp) | ΔMSF (pp) |
-|---|---:|---:|---:|---:|---:|
-| Full SEADP-Net-L | 29.82 | 60.94 | 62.27 | – | – |
-| RF dense RGB-D head | 23.75 | 59.50 | 60.87 | -1.44 | -1.40 |
-| RGB input to the deeper local path | 29.82 | 60.27 | 61.43 | -0.68 | -0.83 |
-| B-only training | 27.19 | 59.70 | 60.90 | -1.24 | -1.37 |
-| All-RGB inputs | 29.82 | 60.20 | 61.55 | -0.74 | -0.72 |
-| Reversed local depths | 29.82 | 60.36 | 61.48 | -0.58 | -0.79 |
-| Symmetric local depths | 29.76 | 60.08 | 61.36 | -0.87 | -0.91 |
-| Local depth only | 29.82 | 59.86 | 61.04 | -1.08 | -1.23 |
-
-<sub>Architecture ablations on NYUv2; Δ denotes the difference from SEADP-Net-L. Values are single-seed observations from the frozen ablation records.</sub>
-
 ### Accuracy vs computation
 
 <p align="center">

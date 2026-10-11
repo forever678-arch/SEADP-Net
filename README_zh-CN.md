@@ -65,21 +65,6 @@ patch 12）作为共享 RGB-D 上下文编码器，加入 stride-4 高分辨率�
 
 <sub>mIoU 为 %，MACs 为单次前向 G 值；"–"表示省略或不可得的结果，与论文一致。对照精度取 [DFormer++ Table 1](https://mftp.mmcheng.net/Papers/26PAMI-Deformer.pdf) 与 [DFormerv2 Table 1](https://openaccess.thecvf.com/content/CVPR2025/papers/Yin_DFormerv2_Geometry_Self-Attention_for_RGBD_Semantic_Segmentation_CVPR_2025_paper.pdf) 的论文报告值；外部方法未在本仓库环境重训，跨论文计数范围不保证一致。SEADP-Net 各行使用发布参数平均权重、五尺度+水平翻转；我们的 MACs 仅计 Conv/Linear/attention（1 FMA = 1 MAC）。</sub>
 
-### 架构消融
-
-| Configuration | Params (M) | SS (%) | MSF (%) | ΔSS (pp) | ΔMSF (pp) |
-|---|---:|---:|---:|---:|---:|
-| Full SEADP-Net-L | 29.82 | 60.94 | 62.27 | – | – |
-| RF dense RGB-D head | 23.75 | 59.50 | 60.87 | -1.44 | -1.40 |
-| RGB input to the deeper local path | 29.82 | 60.27 | 61.43 | -0.68 | -0.83 |
-| B-only training | 27.19 | 59.70 | 60.90 | -1.24 | -1.37 |
-| All-RGB inputs | 29.82 | 60.20 | 61.55 | -0.74 | -0.72 |
-| Reversed local depths | 29.82 | 60.36 | 61.48 | -0.58 | -0.79 |
-| Symmetric local depths | 29.76 | 60.08 | 61.36 | -0.87 | -0.91 |
-| Local depth only | 29.82 | 59.86 | 61.04 | -1.08 | -1.23 |
-
-<sub>NYUv2 架构消融；Δ 为相对 SEADP-Net-L 的差值。数值为冻结消融记录的单 seed 观察值。</sub>
-
 ### 精度-计算量
 
 <p align="center">
