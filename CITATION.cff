@@ -5,7 +5,7 @@ type: software
 authors:
   - name: "The SEADP-Net Authors"
 version: 0.1.0
-date-released: "2026-10-11"     # TODO: set the actual release date
+date-released: "2026-10-11"
 license: MIT
 repository-code: "https://github.com/forever678-arch/SEADP-Net"
 keywords:

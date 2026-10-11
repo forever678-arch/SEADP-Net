@@ -68,9 +68,9 @@ from the RF-DETR release; every command below takes its location via
 Each file is an FP32 uniform parameter average of three listed mid-training
 snapshots (a single-model inference artifact, not an output ensemble) with
 sanitized metadata; the tensor bytes are bit-identical to the corresponding
-training average (dual SHA256 recorded in `model_zoo.json`). Download links
-will be published with the first release; until then obtain the files from
-the authors and verify against `model_zoo.json`.
+training average (dual SHA256 recorded in `model_zoo.json`). All six weights are attached to the
+[v0.1.0 release](https://github.com/forever678-arch/SEADP-Net/releases/tag/v0.1.0);
+verify each file against the SHA256 in `model_zoo.json`.
 
 ## Data preparation
 
