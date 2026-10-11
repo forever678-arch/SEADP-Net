@@ -4,8 +4,12 @@
 
 English | [中文](README_zh-CN.md)
 
-![SEADP-Net architecture overview](docs/figures/architecture_overview.png)
-*Overview: the shared RGB-D context encoder (SCE) and high-resolution stem (HRS) feed two asymmetric local pyramids (ALP_A on RGB, ALP_B on depth) and two decoders whose probabilities fuse with a fixed 0.5/0.5 mean.*
+<p align="center">
+  <img src="docs/figures/architecture_overview.png" width="88%" alt="SEADP-Net architecture overview"><br>
+  <em>The shared RGB-D context encoder (SCE) and high-resolution stem (HRS) feed two
+  asymmetric local pyramids (ALP_A on RGB, ALP_B on depth) and two decoders whose
+  probabilities fuse with a fixed 0.5/0.5 mean.</em>
+</p>
 
 SEADP-Net keeps a whole RF-DETR SegSmall ViT-S encoder (12 blocks, width 384,
 patch 12) as a shared RGB-D context encoder, adds a stride-4 high-resolution
@@ -29,11 +33,12 @@ depths and decoder width.
 | SUN RGB-D (37 cls) | M | 28.95 M | 53.83 | 54.66 |
 | SUN RGB-D (37 cls) | L | 29.82 M | 54.76 | 55.28 |
 
-![NYUv2 performance vs computation](docs/figures/performance_macs.png)
-*NYUv2 mIoU (MS5+flip) vs single-forward MACs. SEADP-Net (stars) uses the
-released avg-234 weights; comparison numbers are paper-reported values
-(CMX, TokenFusion, GeminiFusion, Omnivore, CMNeXt, DFormer, DFormer++,
-DFormerv2). Lines connect the S/M/L sizes of each family; no fitted points.*
+<p align="center">
+  <img src="docs/figures/performance_macs.png" width="65%" alt="NYUv2 mIoU vs single-forward MACs"><br>
+  <em>NYUv2 mIoU (MS5+flip) vs single-forward MACs. SEADP-Net (stars): released
+  weights; comparison values as reported by the original papers. Lines connect
+  each family's S/M/L sizes.</em>
+</p>
 
 Full provenance — weight SHA256, averaging windows, snapshot updates,
 per-head scores and evaluation records — is in [`model_zoo.json`](model_zoo.json)

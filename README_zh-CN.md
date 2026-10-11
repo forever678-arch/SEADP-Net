@@ -4,8 +4,12 @@
 
 [English](README.md) | 中文
 
-![SEADP-Net 架构总览](docs/figures/architecture_overview.png)
-*总览：共享 RGB-D 上下文编码器（SCE）与高分辨率主干（HRS）同时供给两个非对称局部金字塔（ALP_A 输入 RGB，ALP_B 输入深度）与两个解码器；推理时两头概率以固定 0.5/0.5 均值融合。*
+<p align="center">
+  <img src="docs/figures/architecture_overview.png" width="88%" alt="SEADP-Net 架构总览"><br>
+  <em>共享 RGB-D 上下文编码器（SCE）与高分辨率主干（HRS）同时供给两个非对称
+  局部金字塔（ALP_A 输入 RGB，ALP_B 输入深度）与两个解码器；推理时两头概率以
+  固定 0.5/0.5 均值融合。</em>
+</p>
 
 SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、宽度 384、patch 12）作为共享 RGB-D 上下文编码器，加入 stride-4 高分辨率主干，并用两个**非对称**局部金字塔解码——RGB 分支（A）与更深的深度分支（B，输入为 `[填补深度, 原始传感器有效掩码, 深度梯度幅值]`）。训练以等权交叉熵分别监督两个头；推理以固定 0.5/0.5 概率均值融合两头。没有可学习门控、没有点云模块、也没有额外的几何注意力。S / M / L 共用同一编码器，仅通过编码器输入尺度（0.5 / 0.75 / 1.0）、局部宽度、重复深度与解码器宽度区分。
 
@@ -20,11 +24,11 @@ SEADP-Net 将一个完整的 RF-DETR SegSmall ViT-S 编码器（12 个 block、�
 | SUN RGB-D（37 类）| M | 28.95 M | 53.83 | 54.66 |
 | SUN RGB-D（37 类）| L | 29.82 M | 54.76 | 55.28 |
 
-![NYUv2 精度-计算量对比](docs/figures/performance_macs.png)
-*NYUv2 mIoU（MS5+flip）与单次前向 MACs 对比。SEADP-Net（五角星）使用发布的
-参数平均权重；对比方法为各论文报告值（CMX、TokenFusion、GeminiFusion、
-Omnivore、CMNeXt、DFormer、DFormer++、DFormerv2）。连线仅连接各家族 S/M/L
-尺寸，无拟合点。*
+<p align="center">
+  <img src="docs/figures/performance_macs.png" width="65%" alt="NYUv2 mIoU 与单次前向 MACs 对比"><br>
+  <em>NYUv2 mIoU（MS5+flip）与单次前向 MACs。SEADP-Net（五角星）为发布权重；
+  对比值取各论文报告数字。连线仅连接各家族 S/M/L 尺寸。</em>
+</p>
 
 完整溯源——权重 SHA256、平均窗口、快照更新号、逐头成绩与评测记录——见
 [`model_zoo.json`](model_zoo.json) 与 [`eval_records/`](eval_records)（本代码库
