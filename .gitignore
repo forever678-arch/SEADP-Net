@@ -3,9 +3,9 @@ __pycache__/
 weights/
 *.pth
 *.pt
-data/
-runs/
-eval_out/
+/data/
+/runs/
+/eval_out/
 .ipynb_checkpoints/
 .release_id
 .rid
